@@ -1,0 +1,92 @@
+.admin-reg-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* Left Side: Professional Info */
+.admin-info-side {
+  flex: 1;
+  background-color: var(--navy);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 8%;
+}
+
+.admin-info-side h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1.5px;
+}
+
+.admin-info-side p {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+/* Right Side: The Form Box */
+.admin-form-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5%;
+}
+
+.reg-card {
+  width: 100%;
+  max-width: 450px;
+}
+
+.reg-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: var(--navy);
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 8px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.input-group input:focus {
+  outline: 2px solid var(--primary-blue);
+  border-color: transparent;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background-color: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: var(--primary-blue);
+}

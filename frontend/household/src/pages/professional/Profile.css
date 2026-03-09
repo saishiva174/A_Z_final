@@ -1,0 +1,243 @@
+/* --- 1. MAIN CONTAINER --- */
+.tab-view.animate-fade {
+  padding: 2rem;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.view-header {
+  margin-bottom: 2rem;
+}
+
+.view-header h1 {
+  font-size: 2rem;
+  color: #0f172a;
+  font-weight: 800;
+  margin: 0;
+}
+
+.view-header p {
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+/* --- 2. LAYOUT CARD --- */
+.profile-settings-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 3rem;
+  display: flex;
+  flex-direction: row; /* Horizontal: Profile Left, Form Right */
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* --- 3. LEFT SECTION: PROFILE PIC --- */
+.avatar-edit-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.large-avatar {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 40px;
+  overflow: hidden;
+  background: #f1f5f9;
+  border: 4px solid #f8fafc;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+}
+
+.large-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.8rem;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.large-avatar:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-text h3 {
+  font-size: 1.2rem;
+  color: #0f172a;
+  margin: 0;
+}
+
+.avatar-text p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.form-divider {
+  display: none; /* Removed for horizontal flow */
+}
+
+/* --- 4. RIGHT SECTION: FORM --- */
+.settings-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 1.5rem;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.form-input.full {
+  grid-column: span 2;
+}
+
+.form-input label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-input input, 
+.bio-textarea {
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 14px;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.form-input input:focus, 
+.bio-textarea:focus {
+  outline: none;
+  background: white;
+  border-color: #0f172a;
+  box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.05);
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency-prefix, .input-icon {
+  position: absolute;
+  left: 1.25rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.input-with-icon input {
+  padding-left: 3rem;
+}
+
+.bio-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* --- 5. BUTTONS (BOTTOM RIGHT) --- */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.primary-btn {
+  background: #0f172a;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primary-btn:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+.secondary-btn {
+  background: white;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+/* --- 6. ADAPTIVE HALF-SCREEN --- */
+@media (max-width: 1000px) {
+  .profile-settings-card {
+    flex-direction: column; /* Stacks vertically when screen is halved */
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .avatar-edit-section {
+    width: 100%;
+    flex-direction: row; /* Avatar on left, text on right for stacked view */
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .large-avatar {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 0;
+  }
+
+  .input-grid {
+    grid-template-columns: 1fr; /* Single column for half-screen */
+  }
+
+  .form-input.full {
+    grid-column: span 1;
+  }
+}

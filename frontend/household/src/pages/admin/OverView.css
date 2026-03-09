@@ -1,0 +1,148 @@
+/* --- 1. THE REFINED HEADER --- */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3.5rem;
+  padding: 0 5px;
+}
+
+.main-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600; /* Semi-bold for elegance, not heavy */
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.admin-profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  padding: 5px 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-profile-trigger:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.admin-profile-trigger img {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px; /* Slightly squared for a formal look */
+}
+
+.admin-profile-trigger span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+/* --- 2. THE ELEGANT ANALYTICS GRID --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+}
+
+/* Icon - Minimalist Circular Frame */
+.s-icon {
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  border: 1px solid transparent;
+}
+
+.s-data h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.s-data p {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+}
+
+/* Soft Muted Palette for Elegance */
+.purple .s-icon { background: #f5f3ff; color: #6366f1; border-color: #e0e7ff; }
+.green .s-icon  { background: #f0fdf4; color: #22c55e; border-color: #dcfce7; }
+.orange .s-icon { background: #fff7ed; color: #f59e0b; border-color: #ffedd5; }
+.blue .s-icon   { background: #eff6ff; color: #3b82f6; border-color: #dbeafe; }
+
+/* --- 3. THE MANAGEMENT CONSOLE (MINIMALIST) --- */
+.placeholder-view {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Subtle pattern for the placeholder background */
+.placeholder-view::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.placeholder-view p {
+  position: relative;
+  z-index: 1;
+  max-width: 450px;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 1.5rem;
+}
+
+.placeholder-view svg {
+  position: relative;
+  z-index: 1;
+  color: #94a3b8;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .main-header h1 { font-size: 1.25rem; }
+}

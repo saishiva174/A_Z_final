@@ -1,0 +1,247 @@
+/* ReviewPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.review-page-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #1a1a1a;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 1. Navigation */
+.review-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.back-link:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 2. Layout Grid */
+.review-content-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* 3. Common Card Styles */
+.booking-summary-card, .rating-form-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f5f9;
+}
+
+/* 4. Left Sidebar: Booking Details */
+.booking-summary-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #0f172a;
+}
+
+.summary-info {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+}
+
+.summary-info p {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+  color: #475569;
+}
+
+.summary-info p:last-child { margin-bottom: 0; }
+
+.summary-info p strong { color: #0f172a; }
+
+/* Image Gallery */
+.booking-gallery h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.image-scroll {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.job-pic {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 14px;
+  object-fit: cover;
+  transition: 0.3s;
+  cursor: zoom-in;
+}
+
+.job-pic:hover {
+  transform: scale(1.03);
+}
+
+/* 5. Right Column: Form */
+.pro-profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 32px;
+  border-bottom: 1px dashed #e2e8f0;
+  margin-bottom: 32px;
+}
+
+.pro-large-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 22px;
+  object-fit: cover;
+}
+
+.pro-meta h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.pro-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #3b82f6;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Rating Interaction */
+.rating-selector {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.rating-selector p {
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 16px;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.star {
+  font-size: 2.8rem;
+  cursor: pointer;
+  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: #e2e8f0;
+}
+
+.star:hover {
+  transform: scale(1.15);
+}
+
+.star.filled {
+  color: #ffb800; /* Richer Gold */
+}
+
+/* Form Styling */
+textarea {
+  width: 100%;
+  min-height: 160px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: inherit;
+  margin-bottom: 24px;
+  transition: 0.2s;
+}
+
+textarea:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.submit-btn {
+  width: 100%;
+  background: #0f172a;
+  color: white;
+  padding: 18px;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+}
+
+.submit-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 6. Responsive */
+@media (max-width: 900px) {
+  .review-content-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .booking-summary-card {
+    order: 2; /* Move details below form on mobile */
+  }
+  
+  .rating-form-card {
+    order: 1;
+  }
+}

@@ -1,0 +1,238 @@
+:root {
+  --sidebar-width: 280px;
+  --sidebar-collapsed: 80px;
+  --primary-navy: #0f172a;
+  --accent-blue: #3b82f6;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --bg-slate: #f8fafc;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.customer-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-slate);
+  overflow: hidden; /* Prevents double scrollbars */
+}
+
+/* --- 1. SIDEBAR --- */
+.customer-sidebar {
+  width: var(--sidebar-width);
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.25rem;
+  flex-shrink: 0;
+  transition: var(--transition);
+  z-index: 50;
+}
+
+.sidebar-brand {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--primary-navy);
+  letter-spacing: -1px;
+  margin-bottom: 2.5rem;
+  padding-left: 0.5rem;
+}
+
+/* User Profile Section in Sidebar */
+.sidebar-user-info {
+  background: var(--bg-slate);
+  padding: 1.5rem;
+  border-radius: 24px;
+  text-align: center;
+  margin-bottom: 2rem;
+  transition: var(--transition);
+}
+
+.sidebar-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 4px solid white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sidebar-user-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--primary-navy);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-info p {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* --- 2. NAVIGATION --- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.sidebar-nav button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: none;
+  background: transparent;
+  border-radius: 16px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+}
+
+.sidebar-nav button svg {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.sidebar-nav button:hover {
+  background: #f1f5f9;
+  color: var(--primary-navy);
+}
+
+.sidebar-nav button.active {
+  background: var(--primary-navy);
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+}
+
+.sidebar-logout {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: none;
+  background: #fff1f2;
+  color: #e11d48;
+  border-radius: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar-logout:hover {
+  background: #ffe4e6;
+}
+
+/* --- 3. MAIN CONTENT --- */
+.customer-main-content {
+  flex: 1;
+  overflow-y: auto;
+  height: 100vh;
+  position: relative;
+  /* Smooth scroll for better UX */
+  scroll-behavior: smooth;
+}
+
+/* --- 4. HALF-SCREEN RESPONSIVENESS --- */
+@media (max-width: 1000px) {
+  .customer-sidebar {
+    width: var(--sidebar-collapsed);
+    padding: 2rem 0.75rem;
+    align-items: center;
+  }
+
+  /* Hide labels, keep icons */
+  .sidebar-brand, 
+  .sidebar-user-info h4, 
+  .sidebar-user-info p,
+  .sidebar-nav button span,
+  .sidebar-logout span {
+    display: none;
+  }
+
+  .sidebar-user-info {
+    background: transparent;
+    padding: 0;
+  }
+
+  .sidebar-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    margin-bottom: 0;
+  }
+
+  .sidebar-nav button {
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .sidebar-logout {
+    justify-content: center;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .customer-container {
+    flex-direction: column;
+  }
+  
+  .customer-sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    padding: 0.75rem;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .sidebar-user-info, .sidebar-brand {
+    display: none;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .sidebar-logout {
+    margin-top: 0;
+    padding: 0.75rem;
+  }
+}
+
+/* LOADER UTILITY */
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid var(--primary-navy);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

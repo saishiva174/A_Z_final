@@ -1,0 +1,153 @@
+/* --- 1. SEARCH BOX (Ultra-Clean) --- */
+.search-container {
+  margin-bottom: 2rem;
+}
+
+.admin-search-input {
+  width: 100%;
+  max-width: 460px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.admin-search-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+}
+
+/* --- 2. GRID CONFIG --- */
+.cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* --- 3. THE INFO CARD --- */
+.info-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 4. THE DYNAMIC AVATAR (Your Request) --- */
+.avatar-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px; /* Squircle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  overflow: hidden;
+  
+  /* Initial State: Subtle Blue Tint */
+  background: #f0f7ff;
+  color: #3b82f6;
+  border: 2px solid #e1effe;
+  transition: all 0.3s ease;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hover Effect: Avatar Color Change */
+.info-card:hover .avatar-circle {
+  /* Shifts to a deeper Indigo/Purple theme on hover */
+  background: #eef2ff;
+  border-color: #6366f1;
+  color: #6366f1;
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+/* --- 5. CARD CONTENT --- */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.name-meta {
+  text-align: right;
+}
+
+.name-meta h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.name-meta p {
+  margin: 4px 0 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #6366f1; /* Professional Indigo */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-mid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem 0;
+  border-top: 1px solid #f8fafc;
+}
+
+.card-mid p {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* Verified Status Indicator */
+.card-mid p:last-child {
+  color: #059669;
+  font-weight: 700;
+}
+
+/* --- 6. ACTION FOOTER --- */
+.card-foot {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-align: right;
+  transition: color 0.2s;
+}
+
+.info-card:hover {
+  border-color: #6366f1;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.info-card:hover .card-foot {
+  color: #6366f1;
+}
+
+/* Half-screen adjustment */
+@media (max-width: 900px) {
+  .cards-wrapper {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,205 @@
+/* Layout Core */
+.pro-signup-canvas {
+  min-height: 100vh;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.pro-signup-box {
+  display: flex;
+  background: white;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 650px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+}
+
+/* Sidebar Styling */
+.pro-brand-panel.small {
+  flex: 0.8;
+  background: #0f172a;
+  color: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.back-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.startup-tag {
+  color: #38bdf8;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.brand-text h1 { font-size: 2.5rem; margin: 15px 0; line-height: 1.1; }
+.brand-text .blue { color: #38bdf8; }
+.brand-text p { color: #94a3b8; line-height: 1.6; margin-bottom: 30px; }
+
+.mini-list { list-style: none; padding: 0; }
+.mini-list li { color: #cbd5e1; margin-bottom: 12px; font-size: 14px; }
+
+/* Form Styling */
+.pro-form-panel {
+  flex: 1.2;
+  padding: 40px 50px;
+  position: relative; /* Context for children */
+}
+
+.section-title { margin-bottom: 30px; }
+.section-title h2 { color: #1e293b; font-size: 1.5rem; }
+
+.pro-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.grid-subheading {
+  grid-column: span 2;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #6366f1;
+  letter-spacing: 1px;
+  margin: 10px 0 5px;
+}
+
+.full-row { grid-column: span 2; }
+
+/* Custom Inputs */
+.field-group { position: relative; } /* CRITICAL: Anchor for dropdown */
+
+.custom-input {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  padding: 0 12px;
+  transition: all 0.2s;
+}
+
+.custom-input:focus-within {
+  background: white;
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+}
+
+.custom-input .i { color: #64748b; margin-right: 10px; }
+
+.custom-input input {
+  width: 100%;
+  border: none;
+  padding: 12px 0;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+/* FIXED DROPDOWN LOGIC */
+.custom-dropdown {
+  position: absolute;
+  top: calc(100% + 5px); /* Forces it to float below input */
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 9999; /* Forces it to stay on top of everything */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  animation: slideIn 0.2s ease-out;
+}
+
+.drop-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #475569;
+}
+
+.drop-item:hover {
+  background: #f1f5f9;
+  color: #38bdf8;
+}
+
+/* File Upload & Button */
+.file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #f1f5f9;
+  border: 1.5px dashed #cbd5e1;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  height: 44px;
+}
+
+.pro-action-btn {
+  grid-column: span 2;
+  background: #0f172a;
+  color: white;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.pro-login-footer {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 20px;
+  color: #64748b;
+}
+
+.pro-login-footer a { color: #38bdf8; font-weight: 600; text-decoration: none; }
+
+.alert-box {
+  background: #fef2f2;
+  color: #ef4444;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  border: 1px solid #fee2e2;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  .pro-signup-box { flex-direction: column; }
+  .pro-brand-panel.small { padding: 30px; }
+  .pro-form-grid { grid-template-columns: 1fr; }
+  .grid-subheading, .full-row, .pro-action-btn { grid-column: span 1; }
+}

@@ -1,0 +1,16 @@
+node_modules
+.env
+.env.*
+npm-debug.log*
+dist
+build
+uploads
+**/node_modules
+**/dist
+**/.env
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,244 @@
+/* 1. Backdrop Overlay */
+.details-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.8); /* Dark Slate */
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* 2. Main Card */
+.details-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+/* 3. Header & Badges */
+.details-header {
+  padding: 20px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-badge.pending { background: #fef9c3; color: #854d0e; }
+.status-badge.completed { background: #dcfce7; color: #166534; }
+.status-badge.reviewed { background: #e0e7ff; color: #3730a3; }
+
+/* 4. Scrollable Body */
+.details-scroll-content {
+  padding: 25px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.detail-section {
+  margin-bottom: 25px;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* 5. Professional Profile Mini-Card */
+.pro-profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 16px;
+}
+
+.pro-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e2e8f0;
+}
+
+/* 6. Photo Gallery */
+.photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.photo-gallery img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+/* 7. Review Box (History Section) */
+.review-display-box {
+  background: #f0fdf4; /* Light Green */
+  border: 1.5px dashed #bbf7d0;
+  padding: 15px;
+  border-radius: 16px;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.review-comment {
+  font-style: italic;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* 8. Footer Action */
+.details-footer {
+  padding: 20px 25px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.primary-review-btn {
+  width: 100%;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary-review-btn:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+/* 9. Meta Grid (Icons/Info) */
+.meta-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 15px 0;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+/* 1. Logic for long comments to go to next line */
+.review-comment {
+  margin-top: 12px;
+  color: #475569;
+  font-style: italic;
+  line-height: 1.6;
+  /* Crucial for long text */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap; 
+  display: block;
+  width: 100%;
+}
+
+/* 2. Photo Gallery Hover */
+.gallery-item {
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.img-hover-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.gallery-item:hover .img-hover-overlay {
+  opacity: 1;
+}
+
+/* 3. Image Zoom Overlay Styles */
+.img-zoom-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  cursor: zoom-out;
+  animation: fadeIn 0.2s ease;
+}
+
+.zoom-container {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.zoom-container img {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.close-zoom {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

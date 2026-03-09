@@ -1,0 +1,189 @@
+/* --- 1. HISTORY CONTAINER --- */
+.bookings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 2rem;
+}
+
+/* --- 2. THE BOOKING ROW --- */
+.booking-row {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.booking-row:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transform: translateX(4px);
+}
+
+/* --- 3. PROFESSIONAL INFO SECTION --- */
+.book-info {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 2; /* Takes more space */
+}
+
+.pro-avatar-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pro-row-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: #f1f5f9;
+}
+
+/* Status Icon Badge on Avatar */
+.book-icon-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: white;
+  border: 2px solid white;
+}
+
+.book-icon-badge.completed, .book-icon-badge.reviewed { background: #10b981; }
+.book-icon-badge.cancelled, .book-icon-badge.declined { background: #ef4444; }
+
+.book-text h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.book-text p {
+  margin: 4px 0 0 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* --- 4. STATUS & PRICE SECTION --- */
+.book-status {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.status-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-icon { font-size: 1rem; }
+
+/* Dynamic Colors for Tags */
+.status-tag.completed, .status-tag.reviewed { background: #ecfdf5; color: #059669; }
+.status-tag.cancelled { background: #fef2f2; color: #dc2626; }
+.status-tag.declined { background: #fff7ed; color: #ea580c; }
+
+.book-price {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* --- 5. ACTION BUTTONS --- */
+.booking-actions {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.complete-action-btn {
+  background: #0f172a;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.complete-action-btn:hover {
+  background: #1e293b;
+}
+
+.icon-btn {
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.icon-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* --- 6. ADAPTIVE RESPONSIVENESS (Half-Screen) --- */
+@media (max-width: 850px) {
+  .booking-row {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .book-info {
+    min-width: 100%; /* Forces professional info to take top row */
+  }
+
+  .book-status {
+    flex-direction: row; /* Aligns price and status side-by-side */
+    justify-content: flex-start;
+    flex: 1;
+  }
+
+  .booking-actions {
+    flex: 1;
+  }
+}
+
+/* Fade-in Animation for rows */
+.history-row-fade {
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}

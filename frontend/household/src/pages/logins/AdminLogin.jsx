@@ -81,7 +81,7 @@ const handleSubmit = async (e) => {
             </div>
             <button type="submit" className="submit-btn">Login to Console</button>
             <p style={{marginTop: '20px', fontSize: '13px', color: '#64748b'}}>
-              ${"Don't have an account?"}` <Link to="/register-admin">Register here</Link>
+              ${"Don't have an account?"}` <Link to="/">Register here</Link>
             </p>
           </form>
         </div>

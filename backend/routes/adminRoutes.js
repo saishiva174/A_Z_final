@@ -94,7 +94,7 @@ router.put('/update-full-profile',verifyToken, uploadProfile.single('profilePic'
   }
 });
 
-
+/*
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -125,7 +125,7 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
-
+*/
 
 router.post('/login', async (req, res) => {
   try {

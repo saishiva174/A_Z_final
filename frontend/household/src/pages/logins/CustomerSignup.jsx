@@ -5,7 +5,7 @@ import {
   FiUser, FiMail, FiLock, FiArrowRight, 
   FiArrowLeft, FiPhone, FiEye, FiEyeOff, FiSmile 
 } from 'react-icons/fi';
-import './ProfessionalSignup.css'; // Using the same unified CSS
+import './ProfessionalSignUp.css'; // Using the same unified CSS
 import { API_URL } from '../../apiConfig';
 
 const CustomerSignup = () => {

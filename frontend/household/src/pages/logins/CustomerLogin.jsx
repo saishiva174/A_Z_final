@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiLock, FiLogIn, FiArrowLeft, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
-import './ProfessionalSignup.css'; // Shared CSS for consistent startup branding
+import './ProfessionalSignUp.css'; // Shared CSS for consistent startup branding
 import { API_URL } from '../../apiConfig';
 
 const CustomerLogin = () => {

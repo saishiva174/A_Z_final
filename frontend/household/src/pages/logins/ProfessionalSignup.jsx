@@ -5,6 +5,7 @@ import {
   FiUser, FiMail, FiLock, FiBriefcase, FiArrowRight, 
   FiArrowLeft, FiFileText, FiMapPin, FiPhone, FiEye, FiEyeOff 
 } from 'react-icons/fi';
+ 
 import './ProfessionalSignUp.css';
 import { API_URL } from '../../apiConfig';
 

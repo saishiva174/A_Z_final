@@ -1,7 +1,7 @@
 import  { useState, useEffect } from 'react';
 import {  FiMapPin, FiStar, FiChevronLeft,FiCamera} from 'react-icons/fi';
 import axios from 'axios';
-import './ViewProfessional.css';
+import './viewProfessional.css';
 import { API_URL } from '../../apiConfig';
 
 const ViewProfessional = ({ proId, onBack }) => {

@@ -6,7 +6,8 @@ import {
   FiArrowLeft, FiPhone, FiEye, FiEyeOff, FiSmile 
 } from 'react-icons/fi';
 
- import './ProfessionalSignUp.css'; // Using the same unified CSS
+ 
+import './ProfessionalSignUp.css'; // Using the same unified CSS
 import { API_URL } from '../../apiConfig';
 
 const CustomerSignup = () => {

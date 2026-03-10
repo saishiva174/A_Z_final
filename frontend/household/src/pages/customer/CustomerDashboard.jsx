@@ -8,7 +8,7 @@ import TabView from './TabView';
 import Bookings from './Bookings';
 import History from './History';
 import Profile from './Profile';
-import { ReviewPage } from './ReviewPage';
+import { ReviewPage } from './ReviewPage.jsx';
 import { DEFAULT_AVATAR } from '../../utils/utils';
 import { API_URL } from '../../apiConfig';
 

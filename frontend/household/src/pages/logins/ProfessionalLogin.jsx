@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiLock, FiLogIn, FiArrowLeft, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
 
+
 import './ProfessionalSignUp.css'; // Using the same CSS file for consistency
 import { API_URL } from '../../apiConfig';
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminRegister.css'; 
+import { API_URL } from '../../apiConfig';
 
 const AdminLogin = () => {
   // 1. State for inputs and error handling
@@ -15,7 +16,7 @@ const AdminLogin = () => {
 const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('api/admin/login', { email, password });
+      const response = await axios.post(`${API_URL}/api/admin/login`, { email, password });
 
       // 1. Store the TOKEN (This is the most important part)
       localStorage.setItem('token', response.data.token); 
@@ -81,7 +82,7 @@ const handleSubmit = async (e) => {
             </div>
             <button type="submit" className="submit-btn">Login to Console</button>
             <p style={{marginTop: '20px', fontSize: '13px', color: '#64748b'}}>
-              ${"Don't have an account?"}` <Link to="/">Register here</Link>
+              ${"Don't have an account?"}` <Link to="/register-admin">Register here</Link>
             </p>
           </form>
         </div>

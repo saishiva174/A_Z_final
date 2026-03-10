@@ -2,6 +2,7 @@ import  { useState } from 'react';
 import { FiStar, FiCalendar, FiMapPin, FiCheckCircle, FiChevronLeft } from 'react-icons/fi';
 import axios from 'axios';
 import './ReviewPage.css'
+import { API_URL } from '../../apiConfig';
 export const ReviewPage = ({ booking, onBack,}) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -11,7 +12,7 @@ export const ReviewPage = ({ booking, onBack,}) => {
     if (rating === 0) return alert("Please select a rating.");
     setIsSubmitting(true);
     try {
-      await axios.post(`/api/bookings/reviews`, {
+      await axios.post(`${API_URL}/api/bookings/reviews`, {
         booking_id: booking.id,
         pro_id: booking.pro_id,
         rating,

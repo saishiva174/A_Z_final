@@ -2,6 +2,7 @@ import  { useState, useEffect } from 'react';
 import {  FiMapPin, FiStar, FiChevronLeft,FiCamera} from 'react-icons/fi';
 import axios from 'axios';
 import './ViewProfessional.css';
+import { API_URL } from '../../apiConfig';
 
 const ViewProfessional = ({ proId, onBack }) => {
 
@@ -29,7 +30,7 @@ const removeImage = (indexToRemove) => {
  const fetchProProfile = async (proId) => {
     try {
         setLoading(true);
-        const response = await axios.get(`/api/pro/profile/${proId}`);
+        const response = await axios.get(`${API_URL}/api/pro/profile/${proId}`);
         const data = response.data;
           
          
@@ -72,7 +73,7 @@ const handleBookingSubmit = async (e) => {
   });
 
   try {
-    await axios.post(`/api/users/book-job`, formData, {
+    await axios.post(`${API_URL}/api/users/book-job`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
     alert("Booking Request Sent with Photos!");

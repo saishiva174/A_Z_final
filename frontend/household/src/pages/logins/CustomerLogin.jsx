@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiLock, FiLogIn, FiArrowLeft, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
 import './ProfessionalSignup.css'; // Shared CSS for consistent startup branding
+import { API_URL } from '../../apiConfig';
 
 const CustomerLogin = () => {
   const [identifier, setIdentifier] = useState('');
@@ -18,7 +19,7 @@ const CustomerLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('/api/users/login', {
+      const response = await axios.post(`${API_URL}/api/users/login`, {
         identifier,
         password
       });

@@ -6,6 +6,7 @@ import {
   FiArrowLeft, FiFileText, FiMapPin, FiPhone, FiEye, FiEyeOff 
 } from 'react-icons/fi';
 import './ProfessionalSignup.css';
+import { API_URL } from '../../apiConfig';
 
 const ProfessionalSignup = () => {
   const [formData, setFormData] = useState({ 
@@ -49,7 +50,7 @@ const ProfessionalSignup = () => {
       Object.keys(formData).forEach(key => data.append(key, formData[key]));
       data.append('role', 'pro');
       data.append('document', documentFile);
-      await axios.post('/api/pro/register', data);
+      await axios.post(`${API_URL}/api/pro/register`, data);
       navigate('/pro-login');
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");

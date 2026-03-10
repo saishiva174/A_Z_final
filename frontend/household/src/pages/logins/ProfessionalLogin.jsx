@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiLock, FiLogIn, FiArrowLeft, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
 import './ProfessionalSignup.css'; // Using the same CSS file for consistency
+import { API_URL } from '../../apiConfig';
 
 const ProfessionalLogin = () => {
   const [identifier, setIdentifier] = useState('');
@@ -18,7 +19,7 @@ const ProfessionalLogin = () => {
     setError('');
 
     try {
-      const res = await axios.post('/api/pro/login', { identifier, password });
+      const res = await axios.post(`${API_URL}/api/pro/login`, { identifier, password });
       
       if (res.data.user.role === 'pro') {
 

@@ -6,6 +6,7 @@ import {
   FiArrowLeft, FiPhone, FiEye, FiEyeOff, FiSmile 
 } from 'react-icons/fi';
 import './ProfessionalSignup.css'; // Using the same unified CSS
+import { API_URL } from '../../apiConfig';
 
 const CustomerSignup = () => {
   const [formData, setFormData] = useState({ 
@@ -28,7 +29,7 @@ const CustomerSignup = () => {
     setError('');
 
     try {
-      await axios.post('/api/users/register', {
+      await axios.post(`${API_URL}/api/users/register`, {
         ...formData,
         role: 'customer'
       });

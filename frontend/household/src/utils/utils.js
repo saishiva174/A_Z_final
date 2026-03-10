@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../apiConfig";
 export const DEFAULT_AVATAR = `/uploads/defaults/default_avatar.jpg`;
 export const formatDateTime = (dateString) => {
   if (!dateString) return "Not specified";
@@ -16,7 +17,7 @@ export const formatDateTime = (dateString) => {
 };
 
 export const handleUpdateStatus = async (bookingId, newStatus) => {
-    return  await axios.patch(`/api/bookings/status/${bookingId}`, {
+    return  await axios.patch(`${API_URL}/api/bookings/status/${bookingId}`, {
       status: newStatus
     });
 };

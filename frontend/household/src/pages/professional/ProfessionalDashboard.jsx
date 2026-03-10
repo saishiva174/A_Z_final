@@ -7,6 +7,7 @@ import Overview from './Overview';
 import TabView from './TabView';
 import History from './History';
 import Profile from './Profile';
+import { API_URL } from '../../apiConfig';
 
 
 const DEFAULT_AVATAR = `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=`;
@@ -48,7 +49,7 @@ useEffect(() => {
       
         
 
-        const response = await axios.get(`api/pro/profile/${id}`)
+        const response = await axios.get(`${API_URL}/api/pro/profile/${id}`)
         
         const data = response.data;
        
@@ -92,7 +93,7 @@ const handleUpdate = async (id) => {
 
     const token = localStorage.getItem('token');
 
-await axios.put(`/api/admin/update-full-profile`, formData, {
+await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
   headers: { 
     Authorization: `Bearer ${token}`,
     'Content-Type': 'multipart/form-data'
@@ -111,7 +112,7 @@ await axios.put(`/api/admin/update-full-profile`, formData, {
     try {
          const token = localStorage.getItem('token'); // Use the token instead
        
-        const res = await axios.get(`api/pro/overview`, {
+        const res = await axios.get(`${API_URL}/api/pro/overview`, {
             headers: { 
                 Authorization: `Bearer ${token}` 
             }
@@ -132,7 +133,7 @@ const fetchRequests = async () => {
         setLoading(true);
         const token = localStorage.getItem('token'); // Use the token instead
        
-        const res = await axios.get(`api/pro/all-jobs`, {
+        const res = await axios.get(`${API_URL}/api/pro/all-jobs`, {
             headers: { 
                 Authorization: `Bearer ${token}` 
             }

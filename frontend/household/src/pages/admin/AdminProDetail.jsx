@@ -9,6 +9,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import "./AdminProDetail.css";
 import BookingDetailView from './BookingDetailView';
+import { API_URL } from '../../apiConfig';
 
 const DEFAULT_AVATAR = `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=`;
 
@@ -25,7 +26,7 @@ const AdminProDetail = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const res = await axios.get(`/api/admin/pro-details/${id}`);
+        const res = await axios.get(`${API_URL}/api/admin/pro-details/${id}`);
         setData(res.data);
         console.log(res.data.bookings)
       } catch (err) {

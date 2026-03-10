@@ -3,6 +3,7 @@ import axios from 'axios'
 import { FiMessageSquare,FiCalendar,FiXCircle,FiClock ,FiChevronRight} from 'react-icons/fi'
 import { formatDateTime,handleUpdateStatus } from '../../utils/utils';
 import './Bookings.css'
+import { API_URL } from '../../apiConfig';
 const Bookings = ({myBookings,setSelectedBooking,setMyBookings}) => {
 
   
@@ -30,7 +31,7 @@ const Bookings = ({myBookings,setSelectedBooking,setMyBookings}) => {
   const handlePriceUpdate = async (bookingId, newPrice) => {
     try {
       // 1. Backend API Call
-      await axios.put(`api/users/update-price/${bookingId}`, { 
+      await axios.put(`${API_URL}/api/users/update-price/${bookingId}`, { 
         cost: newPrice 
       })
   

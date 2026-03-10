@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminRegister.css';
 import '../Home.css';
+import { API_URL } from '../../apiConfig';
 
 const AdminRegister = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -17,7 +18,7 @@ const AdminRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('api/admin/register', formData);
+      await axios.post(`${API_URL}/api/admin/register`, formData);
       setError(''); // Clear any previous errors
       alert("Registration Successful!");
       navigate('/admin-login');

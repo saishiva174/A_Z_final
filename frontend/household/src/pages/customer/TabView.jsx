@@ -4,6 +4,7 @@ import { FiSearch ,FiStar,FiMapPin} from 'react-icons/fi'
 import axios from 'axios'
 const DEFAULT_AVATAR = `/uploads/defaults/default_avatar.jpg`;
 import ViewProfessional from './ViewProfessional';
+import { API_URL } from '../../apiConfig';
 const TabView = () => {
  
   useEffect(()=>{
@@ -19,7 +20,7 @@ const TabView = () => {
         setLoading(true);
         const token = localStorage.getItem('token'); // Get user token
 
-        const res = await axios.get('/api/pro/available', {
+        const res = await axios.get(`${API_URL}/api/pro/available`, {
             headers: { 
                 Authorization: `Bearer ${token}` 
             }

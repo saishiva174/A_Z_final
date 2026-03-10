@@ -10,6 +10,7 @@ import History from './History';
 import Profile from './Profile';
 import { ReviewPage } from './reviewPage';
 import { DEFAULT_AVATAR } from '../../utils/utils';
+import { API_URL } from '../../apiConfig';
 
 const CustomerDashboard = () => {
 
@@ -40,7 +41,7 @@ useEffect(() => {
 
   const fetchUserProfile = async (id) => {
     try {
-      const response = await axios.get(`/api/users/profile/${id}`);
+      const response = await axios.get(`${API_URL}/api/users/profile/${id}`);
      
       setProfile(response.data);
       setEditData(response.data);
@@ -66,7 +67,7 @@ useEffect(() => {
   
        const token = localStorage.getItem('token');
 
-await axios.put(`/api/admin/update-full-profile`, formData, {
+await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
   headers: { 
     Authorization: `Bearer ${token}`,
     'Content-Type': 'multipart/form-data'
@@ -87,7 +88,7 @@ await axios.put(`/api/admin/update-full-profile`, formData, {
     
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`/api/users/bookings`, {
+    const response = await fetch(`${API_URL}/api/users/bookings`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`, // Prove who you are

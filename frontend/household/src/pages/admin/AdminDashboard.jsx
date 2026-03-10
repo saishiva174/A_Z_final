@@ -10,6 +10,7 @@ import Pending from './Pending';
 import Pros from './Pros';
 import Customers from './Customers';
 import OverView from './OverView';
+import { API_URL } from '../../apiConfig';
 
 const AdminDashboard = () => {
 const [activeTab, setActiveTab] = useState('overview');
@@ -57,7 +58,7 @@ useEffect(()=>{
 
 const getAdminStats = async () => {
   try {
-    const response = await axios.get(`/api/admin/earnings-summary`);
+    const response = await axios.get(`${API_URL}/api/admin/earnings-summary`);
     setStats(response.data);
   } catch (error) {
     console.error("Failed to load admin stats", error);
@@ -75,7 +76,7 @@ const getFilteredData = (dataList) => {
 
 const fetchCustomers = async () => {
   try {
-    const response = await axios.get('/api/admin/all-customers');
+    const response = await axios.get(`${API_URL}/api/admin/all-customers`);
     setAllCustomers(response.data);
   } catch (error) { 
     console.error("Error loading customers:", error);
@@ -85,7 +86,7 @@ const fetchCustomers = async () => {
 // Function to fetch approved professionals
 const fetchApprovedPros = async () => {
   try {
-    const response = await axios.get('/api/admin/verified-pros');
+    const response = await axios.get(`${API_URL}/api/admin/verified-pros`);
     setAllPros(response.data); // Data is result.rows from backend
   } catch (error) {
     console.error("Error loading approved professionals:", error);
@@ -94,7 +95,7 @@ const fetchApprovedPros = async () => {
 
 const fetchPending = async () => {
 try {
-const response = await axios.get('/api/pro/pending');
+const response = await axios.get(`${API_URL}/api/pro/pending`);
 setPendingPros(response.data);
 } catch (err) {
 console.error("Could not fetch pending professionals", err);
@@ -109,7 +110,7 @@ const handleVerification = async (proId, action) => {
 
   try {
     // Call the backend
-    await axios.put(`/api/admin/verify/${proId}`, { 
+    await axios.put(`${API_URL}/api/admin/verify/${proId}`, { 
       status: action 
     });
 

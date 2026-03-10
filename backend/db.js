@@ -1,28 +1,28 @@
 import pkg from 'pg';
-import dotenv from 'dotenv'; // 1. Import dotenv
+import dotenv from 'dotenv';
 const { Pool } = pkg;
 
-dotenv.config(); // 2. Initialize dotenv
+dotenv.config();
 
+// This version is MUCH better for deployment
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: process.env.DATABASE_NAME, 
-  password: process.env.DATABASE_PASS,
-  port: 5432,
+  connectionString: process.env.DATABASE_URL, // Use the full string from Neon
+  ssl: {
+    rejectUnauthorized: false // This is REQUIRED for Neon/Render to talk securely
+  }
 });
 
 // Connection Test
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
-   
-    console.error({
+    console.error("❌ DATABASE CONNECTION ERROR:", {
       message: err.message,
       code: err.code,
-      received_db: process.env.DATABASE_NAME // Check if this is still undefined
+      // Helps you debug if the environment variable is missing
+      has_url: !!process.env.DATABASE_URL 
     });
   } else {
-    console.log("✅ DATABASE CONNECTED");
+    console.log("✅ DATABASE CONNECTED SUCCESSFULLY");
   }
 });
 

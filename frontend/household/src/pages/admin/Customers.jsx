@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FiMapPin,FiUsers } from 'react-icons/fi'
-import './pros.css'
+import './Pros.css'
 const Customers = ({activeTab,searchTerm,setSearchTerm,allCustomers,getFilteredData}) => {
   return (
         <>

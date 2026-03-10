@@ -2,7 +2,7 @@ import  { useEffect,useState } from 'react'
 import './TabView.css'
 import { FiSearch ,FiStar,FiMapPin} from 'react-icons/fi'
 import axios from 'axios'
-const DEFAULT_AVATAR = `/uploads/defaults/default_avatar.jpg`;
+import { DEFAULT_AVATAR } from '../../utils/utils'
 import ViewProfessional from './ViewProfessional';
 import { API_URL } from '../../apiConfig';
 const TabView = () => {

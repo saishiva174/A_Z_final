@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../apiConfig";
-export const DEFAULT_AVATAR = `/uploads/defaults/default_avatar.jpg`;
+export const DEFAULT_AVATAR = `/default_avatar.jpg`;
 export const formatDateTime = (dateString) => {
   if (!dateString) return "Not specified";
   const date = new Date(dateString);

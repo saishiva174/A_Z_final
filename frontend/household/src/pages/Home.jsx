@@ -10,7 +10,7 @@ const Home = () => {
           <img src={logo} alt="A-Z Services Logo" className="navbar-logo" />
           <span className="logo-text">A-Z SERVICES</span>
         </div>
-        <div className="logo">A-Z SERVICES</div>
+        
         <div className="nav-actions">
           <Link to="/admin-login" className="login-link">Login</Link>
         </div>

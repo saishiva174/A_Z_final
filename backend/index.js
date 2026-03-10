@@ -7,7 +7,18 @@ import bookingRoutes from'./routes/bookingRoutes.js';
 
 const app = express();
 
-app.use(cors());
+// Make sure you have BOTH your local and Vercel links
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://a-z-final-c6n4.vercel.app/' // Add your actual Vercel link here
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
+
 app.use(express.json());
 
 // Routes

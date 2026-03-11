@@ -12,11 +12,13 @@ export const ReviewPage = ({ booking, onBack,}) => {
     if (rating === 0) return alert("Please select a rating.");
     setIsSubmitting(true);
     try {
+      const id=localStorage.getItem("userId")
       await axios.post(`${API_URL}/api/bookings/reviews`, {
         booking_id: booking.id,
         pro_id: booking.pro_id,
         rating,
-        comment
+        comment,
+        customer_id:id
       });
       alert("Review submitted successfully!");
       onBack();

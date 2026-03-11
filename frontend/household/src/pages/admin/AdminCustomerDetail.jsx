@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FiMail, FiPhone, FiMapPin, FiArrowLeft, FiX, FiMaximize2, FiCalendar, FiShoppingBag } from 'react-icons/fi';
 import "./AdminProDetail.css"; // Reusing your existing CSS for consistency
+import { API_URL } from '../../apiConfig';
 
 const DEFAULT_AVATAR = `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=`;
 
@@ -16,7 +17,7 @@ const AdminCustomerDetail = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const res = await axios.get(`/api/admin/customer-details/${id}`);
+        const res = await axios.get(`${API_URL}/api/admin/customer-details/${id}`);
         setData(res.data);
       } catch (err) {
         console.error("Error loading customer details:", err);

@@ -13,7 +13,7 @@ const Bookings = ({myBookings,setSelectedBooking,setMyBookings}) => {
   {
     const response= await handleUpdateStatus(bookingId,newStatus);
     if (response.status === 200) {
-      alert("hello");
+      alert("booking status updated");
       setMyBookings(prevBookings => 
         prevBookings.map(book => 
           book.id === bookingId ? { ...book, status: newStatus } : book

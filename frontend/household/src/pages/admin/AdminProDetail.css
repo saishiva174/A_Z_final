@@ -27,6 +27,7 @@
   gap: 8px;
   font-weight: 600;
   transition: 0.2s;
+  color: #4f46e5;
 }
 
 .back-btn:hover { background: #f9fafb; color: #4f46e5; }

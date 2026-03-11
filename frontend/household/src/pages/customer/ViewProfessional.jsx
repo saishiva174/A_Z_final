@@ -76,7 +76,7 @@ const handleBookingSubmit = async (e) => {
     await axios.post(`${API_URL}/api/users/book-job`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
-    alert("Booking Request Sent with Photos!");
+    alert("Booking Request Sent!");
     setShowBookingForm(false);
   } catch (err) {
     console.error(err);

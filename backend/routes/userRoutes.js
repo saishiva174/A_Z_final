@@ -177,6 +177,7 @@ router.post('/book-job', uploadWork.array('problem_images', 10), async (req, res
 
         res.json({ message: "Booking success!" });
     } catch (err) {
+      console.log("error")
         res.status(500).send(err.message);
     }
 });

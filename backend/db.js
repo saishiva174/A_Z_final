@@ -15,7 +15,7 @@ const pool = new Pool({
 // Connection Test
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
-    console.error("❌ DATABASE CONNECTION ERROR:", {
+    console.error("❌ DATABASE CONNECTION ERROR: debugging", {
       message: err.message,
       code: err.code,
       // Helps you debug if the environment variable is missing

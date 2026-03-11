@@ -168,7 +168,8 @@ router.post('/book-job', uploadWork.array('problem_images', 10), async (req, res
         );
 
         const bookingId = bookingResult.rows[0].id;
-
+        
+         console.log(bookingId)
         // 2. Insert image paths into a separate table (e.g., job_images) linked to the bookingId
         for (let path of imagePaths) {
             await pool.query("INSERT INTO booking_images (booking_id, image_url) VALUES ($1, $2)", [bookingId, path]);

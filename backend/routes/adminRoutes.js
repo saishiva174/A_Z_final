@@ -164,7 +164,6 @@ router.post('/login', async (req, res) => {
 });
 
 
-// 1. Get all professionals waiting for approval
 router.get('/pending-pros', async (req, res) => {
   try {
     const pros = await pool.query("SELECT * FROM users WHERE role = 'pro' AND is_verified = false");

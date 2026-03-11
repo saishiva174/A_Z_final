@@ -34,6 +34,9 @@ app.use('/uploads', express.static('uploads'));
 // ... other middleware (cors, express.json)
 
 // All customer routes will start with /api/users
+app.get("/ping", (req, res) => {
+  res.status(200).send("Server is awake");
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {

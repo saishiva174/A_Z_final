@@ -38,7 +38,7 @@ const BookingDetails = ({ booking, onClose, review }) => {
             <div className="meta-grid">
               <div className="meta-item"><FiCalendar /> {new Date(booking.preferred_time).toLocaleDateString()}</div>
               <div className="meta-item"><FiMapPin /> {booking.location}</div>
-              <div className="meta-item"><FiDollarSign /> {booking.budget}</div>
+              <div className="meta-item"> &#8377;{booking.budget}</div>
             </div>
             <p className="description-text">{booking.description}</p>
           </section>

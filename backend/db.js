@@ -15,14 +15,14 @@ const pool = new Pool({
 // Connection Test
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
-    console.error("❌ DATABASE CONNECTION ERROR: debugging", {
+    console.error("❌ DATABASE CONNECTION ERROR:", {
       message: err.message,
       code: err.code,
       // Helps you debug if the environment variable is missing
       has_url: !!process.env.DATABASE_URL 
     });
   } else {
-    console.log("✅ DATABASE CONNECTED SUCCESSFULLY xxx");
+    console.log("✅ DATABASE CONNECTED SUCCESSFULLY");
   }
 });
 

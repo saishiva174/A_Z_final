@@ -144,7 +144,7 @@ const History = ({ jobs }) => {
                           ))}
                           <span className="rating-num">({selectedReceipt.user_rating}/5)</span>
                        </div>
-                       <p className="review-text">"{selectedReceipt.user_review || "No written feedback provided."}"</p>
+                       <p className="review-text">"{selectedReceipt.user_comment || "No written feedback provided."}"</p>
                     </div>
                   </div>
                 )}

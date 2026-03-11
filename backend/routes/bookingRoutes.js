@@ -34,7 +34,7 @@ router.patch('/status/:id', async (req, res) => {
 });
 
 router.post('/reviews', async (req, res) => {
-    const { booking_id, pro_id, rating, comment } = req.body;
+    const { booking_id, pro_id, rating, comment,customer_id } = req.body;
 
     // 1. Validation
     if (!booking_id || !pro_id || !rating) {
@@ -49,11 +49,11 @@ router.post('/reviews', async (req, res) => {
 
         // 2. Insert the new review
         const insertReviewSql = `
-            INSERT INTO reviews (booking_id, pro_id, rating, comment, created_at)
-            VALUES ($1, $2, $3, $4, NOW())
+            INSERT INTO reviews (booking_id, customer_id,pro_id, rating, comment, created_at)
+            VALUES ($1, $2, $3, $4,$5, NOW())
             RETURNING id;
         `;
-        await client.query(insertReviewSql, [booking_id, pro_id, rating, comment]);
+        await client.query(insertReviewSql, [booking_id,customer_id, pro_id, rating, comment]);
 
         // 3. Update the professional's average rating in the users table
         // We calculate the average of all reviews for this pro and round to 1 decimal place

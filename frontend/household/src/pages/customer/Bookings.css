@@ -133,3 +133,27 @@
     text-align: center;
   }
 }
+
+
+
+
+@media (max-width: 600px) {
+  /* Targeted reset for the header and title */
+  div.tab-view header.view-header,
+  header.view-header,
+  .view-header h1 {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    text-align: left !important;
+    position: static !important; /* In case it was absolute/relative */
+    width: 100% !important;
+    display: block !important;
+  }
+
+  /* Reset the parent container in case it has a padding/margin */
+  .tab-view {
+    padding-left: 15px !important; /* Small padding so it doesn't touch the glass */
+    margin-left: 0 !important;
+    width: 100vw !important;
+  }
+}

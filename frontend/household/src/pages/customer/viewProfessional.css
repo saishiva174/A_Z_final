@@ -21,10 +21,11 @@ body {
   border: 1px solid #e2e8f0;
   padding: 8px 16px;
   border-radius: 12px;
-  color: #64748b;
+  color: #39639e;
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 2rem;
+
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }

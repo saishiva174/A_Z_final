@@ -219,3 +219,124 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+
+
+
+
+/* --- PROFESSIONAL MOBILE NAVIGATION (YouTube Style) --- */
+@media (max-width: 600px) {
+  .pro-container {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .pro-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 65px;
+    background: white !important;
+    border-top: 1px solid #e2e8f0;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: 1000;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Hide headers and profile info on the bottom bar */
+  .sidebar-brand, 
+  .sidebar-user-info {
+    display: none !important;
+  }
+
+  .sidebar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 4 !important;
+    height: 100% !important;
+    gap: 0 !important;
+  }
+
+  /* Style for all buttons */
+  .sidebar-nav button, 
+  .sidebar-logout {
+    flex: 1 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 2px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: var(--text-muted) !important;
+    font-size: 10px !important;
+    position: relative; /* Essential for the badge positioning */
+  }
+
+  .sidebar-nav button svg, 
+  .sidebar-logout svg {
+    font-size: 1.3rem !important;
+  }
+
+  /* Active State */
+  .sidebar-nav button.active {
+    color: var(--accent-blue) !important;
+    background: transparent !important;
+  }
+
+  /* RED NOTIFICATION BADGE (Requests) */
+  .job-count-badge {
+    position: absolute !important;
+    top: 8px !important;
+    right: 20% !important; /* Positions it nicely over the briefcase icon */
+    margin: 0 !important;
+    font-size: 8px !important;
+    padding: 2px 5px !important;
+    border: 2px solid white; /* Adds a clean border so it pops */
+  }
+
+  /* Logout Button */
+  .sidebar-logout {
+    flex: 1 !important;
+    color: #e11d48 !important;
+  }
+
+  .sidebar-logout span {
+    display: block !important;
+  }
+
+  /* Main Content Layout Reset */
+  .pro-main-content {
+    flex: 1;
+    width: 100vw !important;
+    margin-left: 0 !important;
+    padding: 15px !important;
+    padding-bottom: 80px !important; /* Space so bottom items aren't hidden */
+    height: calc(100vh - 65px) !important;
+    overflow-y: auto;
+  }
+
+  /* Force child components to align left */
+  .pro-main-content > div,
+  .tab-view,
+  .overview-container,
+  .profile-container {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  h1, h2, h3 {
+    text-align: left !important;
+    margin-left: 0 !important;
+  }
+}

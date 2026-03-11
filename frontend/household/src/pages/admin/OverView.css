@@ -146,3 +146,46 @@
   .stats-grid { grid-template-columns: 1fr; }
   .main-header h1 { font-size: 1.25rem; }
 }
+
+@media (max-width: 600px) {
+  /* Stack the header or simplify it */
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .admin-profile-trigger {
+    width: 100%; /* Full width button on mobile feels more "app-like" */
+    justify-content: center;
+  }
+
+  /* Optimize the stats cards for small screens */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr !important; /* Two columns instead of one looks better for 4 cards */
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 1.25rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .s-icon {
+    margin-bottom: 0.75rem;
+  }
+
+  .s-data h3 {
+    font-size: 1.4rem;
+  }
+
+  .s-data p {
+    font-size: 0.65rem;
+  }
+
+  .placeholder-view {
+    padding: 3rem 1rem;
+  }
+}

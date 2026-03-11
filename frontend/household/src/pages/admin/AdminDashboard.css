@@ -206,3 +206,105 @@
     justify-content: center;
   }
 }
+
+
+
+@media (max-width: 600px) {
+  .admin-container {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 65px;
+    background: white !important;
+    border-top: 1px solid #e2e8f0;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: 1000;
+    /* Force the sidebar to behave as the horizontal container */
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Hide Logo and Branding on mobile bottom bar */
+  .admin-logo {
+    display: none !important;
+  }
+
+  /* Navigation container holds the 4 main tabs */
+  .admin-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex: 4 !important; /* Takes 80% width for the 4 nav items */
+    height: 100% !important;
+    gap: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Style for all buttons (Nav and Logout) */
+  .admin-nav button, 
+  .back-to-site-btn {
+    flex: 1 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important; /* Icon on top of text */
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 2px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #64748b !important;
+    font-size: 10px !important;
+    position: relative;
+  }
+
+  .admin-nav button svg, 
+  .back-to-site-btn svg {
+    font-size: 1.3rem !important;
+    margin: 0 !important;
+  }
+
+  /* Active State Fix */
+  .admin-nav button.active {
+    color: #3b82f6 !important; /* Your accent-blue */
+    background: transparent !important;
+  }
+
+  /* Approval Count Pill Positioning */
+  .count-pill {
+    position: absolute !important;
+    top: 6px;
+    right: 15%;
+    background: #ef4444 !important;
+    font-size: 9px !important;
+    padding: 2px 5px !important;
+    border-radius: 10px !important;
+    border: 2px solid white;
+  }
+
+  /* Moving the Logout Button to the end of the row */
+  .back-to-site-btn {
+    order: 5; /* Forces it to the far right */
+    flex: 1 !important; /* Takes the final 20% width */
+    color: #e11d48 !important; /* Red color */
+  }
+
+  /* Adjusting the main content to not be hidden by the bar */
+  .admin-main-content {
+    margin-left: 0 !important;
+    padding: 15px !important;
+    padding-bottom: 80px !important; 
+    width: 100vw !important;
+    height: calc(100vh - 65px) !important;
+    display: block !important;
+  }
+}

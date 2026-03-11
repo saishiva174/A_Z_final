@@ -20,20 +20,21 @@ const Pending = ({pendingPros,handleVerification,openDoc}) => {
           </thead>
           <tbody>
             {pendingPros.map(pro => (
-              <tr key={pro.id}>
-                <td><b>{pro.name}</b></td>
-                <td>{pro.service}</td>
-                <td><FiMapPin /> {pro.location}</td>
-                <td>
-                <button onClick={() => openDoc(pro.id_document_url)} className="view-doc-btn">
-                <FiEye /> View ID
-                </button>
-                </td>
-                <td>
-                  <button className="approve-btn" onClick={()=>handleVerification(pro.id,"approve")}>Approve</button>
-                  <button className="reject-btn" onClick={()=>handleVerification(pro.id,"reject")}>Reject</button>
-                </td>
-              </tr>
+             // ... inside your .map()
+<tr key={pro.id}>
+  <td data-label="Professional"><b>{pro.name}</b></td>
+  <td data-label="Trade">{pro.service}</td>
+  <td data-label="Location"><span><FiMapPin /> {pro.location}</span></td>
+  <td data-label="ID Proof">
+    <button onClick={() => openDoc(pro.id_document_url)} className="view-doc-btn">
+      <FiEye /> View
+    </button>
+  </td>
+  <td data-label="Actions">
+    <button className="approve-btn" onClick={() => handleVerification(pro.id, "approve")}>Approve</button>
+    <button className="reject-btn" onClick={() => handleVerification(pro.id, "reject")}>Reject</button>
+  </td>
+</tr>
             ))}
           </tbody>
         </table>

@@ -4,14 +4,14 @@ const { Pool } = pkg;
 
 dotenv.config();
 
-// This version is MUCH better for deployment
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // Use the full string from Neon
-  ssl: {
-    rejectUnauthorized: false // This is REQUIRED for Neon/Render to talk securely
-  }
-});
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  // This logic checks if the URL contains 'localhost' or '127.0.0.1'
+  ssl: process.env.DATABASE_URL.includes('localhost') || process.env.DATABASE_URL.includes('127.0.0.1') 
+    ? false 
+    : { rejectUnauthorized: false }
+});
 // Connection Test
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {

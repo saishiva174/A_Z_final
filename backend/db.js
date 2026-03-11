@@ -22,7 +22,7 @@ pool.query('SELECT NOW()', (err, res) => {
       has_url: !!process.env.DATABASE_URL 
     });
   } else {
-    console.log("✅ DATABASE CONNECTED SUCCESSFULLY");
+    console.log("✅ DATABASE CONNECTED SUCCESSFULLY xxx");
   }
 });
 

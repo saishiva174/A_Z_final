@@ -140,3 +140,61 @@ td:last-child {
   border: 2px dashed #f1f5f9;
   border-radius: 12px;
 }
+
+
+@media (max-width: 768px) {
+  /* 1. Reset the Container */
+  .table-container {
+    padding: 1rem !important;
+    background: transparent !important; /* Makes cards pop more */
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 2. Hide Table Headers */
+  .custom-table thead {
+    display: none !important;
+  }
+
+  /* 3. Turn Rows into Cards */
+  .custom-table, .custom-table tbody, .custom-table tr, .custom-table td {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .custom-table tr {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  /* 4. Style the Cells as "Rows" inside the card */
+  .custom-table td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    min-width: unset !important; /* Fixes the horizontal stretch */
+  }
+
+  /* 5. The Actions (Approve/Reject) Row */
+  .custom-table td:last-child {
+    border-bottom: none !important;
+    padding-top: 15px !important;
+    gap: 10px !important;
+    min-width: 100% !important;
+  }
+
+  /* 6. Add the Labels (Important: See JSX step below) */
+  .custom-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #64748b;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+}

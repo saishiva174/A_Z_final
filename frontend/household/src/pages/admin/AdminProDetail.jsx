@@ -72,24 +72,37 @@ const AdminProDetail = () => {
       </nav>
 
       <div className="header-card">
-        <div className="pro-bio-main">
-          <div className="avatar-wrapper">
-            <img 
-              src={data.summary.profile_pic_url ? data.summary.profile_pic_url : `${DEFAULT_AVATAR}${data.summary.name}`} 
-              alt="pro-profile"
-            />
-          </div>
-          <div className="bio-info">
-            <h1>{data.summary.name}</h1>
-            <div className="contact-grid">
-              <span><FiMail /> {data.summary.email}</span>
-              <span><FiPhone /> {data.summary.phone_number}</span>
-              <span><FiMapPin /> {data.summary.location}</span>
-            </div>
-          </div>
+  <div className="pro-bio-main">
+    <div className="avatar-wrapper">
+      <img 
+        src={data.summary.profile_pic_url || `${DEFAULT_AVATAR}${data.summary.name}`} 
+        alt="pro-profile"
+      />
+      <div className="verified-badge-icon">
+        <FiStar />
+      </div>
+    </div>
+    
+    <div className="bio-info">
+      <div className="name-status-row">
+        <h1>{data.summary.name}</h1>
+        <span className="account-type-tag">Professional</span>
+      </div>
+      
+      <div className="contact-grid">
+        <div className="contact-item">
+          <FiMail /> <span>{data.summary.email}</span>
+        </div>
+        <div className="contact-item">
+          <FiPhone /> <span>{data.summary.phone_number}</span>
+        </div>
+        <div className="contact-item">
+          <FiMapPin /> <span>{data.summary.location}</span>
         </div>
       </div>
-
+    </div>
+  </div>
+</div>
       <div className="stats-grid">
         <div className="stat-card revenue">
           <label>Total Earnings</label>
@@ -105,55 +118,64 @@ const AdminProDetail = () => {
         </div>
       </div>
 
-      <div className="history-container">
-        <div className="table-header">
-          <h3>Job History & Evidence</h3>
-          <small>Click on a row to see full booking details</small>
-        </div>
-        <div className="table-responsive">
-          <table className="admin-pro-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Customer</th>
-                <th>Service Type</th>
-                <th>Budget</th>
-                <th>Status</th>
-                <th>Work Evidence</th>
-              </tr>
-            </thead>
-            <tbody>
-           
-              {data.bookings.map(job => (
-                <tr 
-                  key={job.id} 
-                  className="clickable-row" 
-                  onClick={() => setSelectedBooking(job)}
-                >
-                  <td>{new Date(job.created_at).toLocaleDateString()}</td>
-                  <td className="font-bold">{job.customer_name}</td>
-                  <td>{job.service_type}</td>
-                  <td className="revenue-text">₹{job.budget}</td>
-                  <td><span className={`status-tag ${job.status=="Reviewed"?"Completed":job.status}`}>{job.status=="Reviewed"?"Completed":job.status}</span></td>
-                  <td>
-                    <div className="evidence-gallery" onClick={(e) => e.stopPropagation()}>
-                      {job.job_images && job.job_images.length > 0 ? (
-                        job.job_images.map((img, i) => (
-                          <div key={i} className="thumb-container" onClick={() => setSelectedImg(img)}>
-                            <img src={img} alt="proof" />
-                            <div className="thumb-overlay"><FiMaximize2 /></div>
-                          </div>
-                        ))
-                      ) : <span className="no-data">No Evidence</span>}
+    <div className="history-container">
+  <div className="table-header">
+    <h3>Job History & Evidence</h3>
+    <small>Click row for details • {data.bookings.length} Total Jobs</small>
+  </div>
+  <div className="table-responsive">
+    <table className="admin-pro-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Service Type</th>
+          <th>Budget</th>
+          <th>Status</th>
+          <th>Work Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.bookings.map(job => (
+          <tr 
+            key={job.id} 
+            className="clickable-row" 
+            onClick={() => setSelectedBooking(job)}
+          >
+            <td data-label="Date">{new Date(job.created_at).toLocaleDateString()}</td>
+            <td data-label="Customer" className="font-bold">{job.customer_name}</td>
+            <td data-label="Service">{job.service_type}</td>
+            <td data-label="Budget" className="revenue-text">₹{job.budget}</td>
+            <td data-label="Status">
+              <span className={`status-tag ${job.status === "Reviewed" ? "Completed" : job.status}`}>
+                {job.status === "Reviewed" ? "Completed" : job.status}
+              </span>
+            </td>
+            <td data-label="Evidence">
+              <div className="evidence-gallery" onClick={(e) => e.stopPropagation()}>
+                {job.job_images?.length > 0 ? (
+                  job.job_images.map((img, i) => (
+                    <div 
+                      key={i} 
+                      className="thumb-container" 
+                      onClick={(e) => {
+                        e.stopPropagation(); 
+                        setSelectedImg(img);
+                      }}
+                    >
+                      <img src={img} alt="proof" />
+                      <div className="thumb-overlay"><FiMaximize2 /></div>
                     </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
+                  ))
+                ) : <span className="no-data">No Evidence</span>}
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
       {/* 2. BOOKING DETAIL MODAL */}
       {selectedBooking && (
        <BookingDetailView 

@@ -3,14 +3,18 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
-  secure: true, // Use SSL
+  secure: true, 
+  // FORCE IPv4: This fixes the ENETUNREACH 2607:... error
+  // family: 4 tells the mailer to ignore IPv6 addresses
+  family: 4, 
   auth: {
     user: process.env.EMAIL_USER,
-    // Ensure this is the 16-character App Password, NO SPACES
     pass: process.env.EMAIL_PASS, 
   },
+  // Optional: Increases timeout for Render's slow cold starts
+  connectionTimeout: 10000, 
+  greetingTimeout: 10000,
 });
-
 export const sendOTPEmail = async (email, otp) => {
   const mailOptions = {
     // It's best if the 'from' email matches the 'user' in auth

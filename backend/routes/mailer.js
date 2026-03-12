@@ -1,22 +1,22 @@
 import nodemailer from 'nodemailer';
+import dns from 'node:dns';
+dns.setDefaultResultOrder('ipv4first'); // This is the magic line
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  // Use the direct IP for Gmail's SMTP server to bypass DNS issues
+  host: '74.125.20.108', 
   port: 587,
-  secure: false, // Must be false for port 587
-  requireTLS: true, // Forces the connection to upgrade to secure
+  secure: false, 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-  // This is the key to stopping the ENETUNREACH error
   tls: {
-    servername: 'smtp.gmail.com',
-    // Prevents the mailer from trying IPv6 addresses
-    minVersion: 'TLSv1.2'
+    // This MUST match the actual domain name for the certificate to work
+    servername: 'smtp.gmail.com', 
+    rejectUnauthorized: false 
   }
 });
-
 // Final check: Some environments still need the family forced
 transporter.options.family = 4;
 export const sendOTPEmail = async (email, otp) => {

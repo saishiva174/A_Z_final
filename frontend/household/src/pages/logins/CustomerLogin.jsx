@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useLocation} from 'react-router-dom';
 import axios from 'axios';
 import { FiLock, FiLogIn, FiArrowLeft, FiUser, FiEye, FiEyeOff } from 'react-icons/fi';
 import './ProfessionalSignUp.css'; 
@@ -12,7 +12,7 @@ const CustomerLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -24,13 +24,13 @@ const CustomerLogin = () => {
         password
       });
 
-      // Save token and user details
+
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('role', response.data.user.role);
       localStorage.setItem('userName', response.data.user.name);
       localStorage.setItem('userId', response.data.user.id);
 
-      // Navigate to dashboard
+      
       navigate('/customer-dashboard', { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Invalid email/phone or password");

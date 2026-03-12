@@ -27,6 +27,7 @@ const ProfessionalLogin = () => {
 
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('proId',res.data.user.id)
+        localStorage.setItem('role',res.data.user.role)
         navigate('/pro-dashboard');
       } else {
         setError("This account is not registered as a Professional.");

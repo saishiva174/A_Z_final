@@ -2,19 +2,23 @@ import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, 
-  // FORCE IPv4: This fixes the ENETUNREACH 2607:... error
-  // family: 4 tells the mailer to ignore IPv6 addresses
-  family: 4, 
+  port: 587,
+  secure: false, // Must be false for port 587
+  requireTLS: true, // Forces the connection to upgrade to secure
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, 
+    pass: process.env.EMAIL_PASS,
   },
-  // Optional: Increases timeout for Render's slow cold starts
-  connectionTimeout: 10000, 
-  greetingTimeout: 10000,
+  // This is the key to stopping the ENETUNREACH error
+  tls: {
+    servername: 'smtp.gmail.com',
+    // Prevents the mailer from trying IPv6 addresses
+    minVersion: 'TLSv1.2'
+  }
 });
+
+// Final check: Some environments still need the family forced
+transporter.options.family = 4;
 export const sendOTPEmail = async (email, otp) => {
   const mailOptions = {
     // It's best if the 'from' email matches the 'user' in auth

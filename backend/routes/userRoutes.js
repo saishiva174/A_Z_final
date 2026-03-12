@@ -72,8 +72,20 @@ router.post('/login', async (req, res) => {
     const user = result.rows[0];
 
     // 2. Role Check
+   // 2. Role Check (Specific Messaging)
+    if (user.role === 'pro') {
+      return res.status(403).json({ 
+        message: "This is the Customer portal. Please log in via the Professional app." 
+      });
+    }
+
+    if (user.role === 'admin') {
+      return res.status(403).json({ 
+        message: "Admin accounts must use the Management Console." 
+      });
+    }
     if (user.role !== 'customer') {
-      return res.status(403).json({ message: "Please use the Admin portal" });
+      return res.status(403).json({ message: "Access denied. Invalid account type." });
     }
 
     // 3. Verify Password
@@ -142,7 +154,7 @@ router.get('/profile/:id', async (req, res) => {
     if (user.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
-
+ 
     res.json(user.rows[0]);
   } catch (err) {
     console.error("Fetch User Error:", err.message);
@@ -155,11 +167,12 @@ router.get('/profile/:id', async (req, res) => {
 
 
 router.post('/book-job', uploadWork.array('problem_images', 10), async (req, res) => {
+  console.log("shs")
     const { customer_id, pro_id, service_type, description, location, preferred_time, budget } = req.body;
     
     // req.files will contain the paths of the uploaded images
     const imagePaths = req.files.map(file => file.path);
-
+    console.log(imagePaths)
     try {
         // 1. Insert into bookings table
         const bookingResult = await pool.query(

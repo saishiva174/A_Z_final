@@ -130,6 +130,8 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
+    
+    // 1. Fetch user by email
     const userResult = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     
     if (userResult.rows.length === 0) {
@@ -137,28 +139,43 @@ router.post('/login', async (req, res) => {
     }
 
     const user = userResult.rows[0];
-    const isMatch = await bcrypt.compare(password, user.password);
 
+    // 2. Verify Password
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid Email or Password" });
     }
 
-    // 2. GENERATE TOKEN (The "Key" to the house)
+    // --- CRITICAL SECURITY CHECK ---
+    // Ensure the user role is 'admin'. 
+    // This prevents customers/pros from using this login route.
+    if (user.role !== 'admin') {
+      return res.status(403).json({ 
+        message: "Access Denied: You do not have administrative privileges." 
+      });
+    }
+    // -------------------------------
+
+    // 3. Generate Token with Role Payload
     const token = jwt.sign(
       { id: user.id, role: user.role }, 
-      process.env.JWT_SECRET, // In production, put this in .env
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    // 3. Send the token to React
+    // 4. Send Response
     res.json({
-      message: "Login successful",
-      token, // <-- Add this!
-      user: { id: user.id, name: user.name, role: user.role }
+      message: "Admin Login successful",
+      token,
+      user: { 
+        id: user.id, 
+        name: user.name, 
+        role: user.role 
+      }
     });
 
   } catch (err) {
-    console.error(err.message);
+    console.error("Login Error:", err.message);
     res.status(500).json({ message: "Server Error" });
   }
 });

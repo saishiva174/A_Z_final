@@ -11,7 +11,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Note: We will add Chat and Jobs tables later to keep it simple for now.
+
 
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,

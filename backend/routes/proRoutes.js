@@ -73,15 +73,13 @@ router.post('/register', uploadDoc.single('document'), async (req, res) => {
   }
 });
 
-// --- 3. PROFESSIONAL LOGIN ROUTE ---
 router.post('/login', async (req, res) => {
   try {
-    // Changed email to identifier to support both login methods
     const { identifier, password } = req.body;
 
-    // Find by Email OR Phone Number
+    // 1. Find user by Email or Phone (Don't filter role in SQL yet)
     const result = await pool.query(
-      "SELECT * FROM users WHERE (email = $1 OR phone_number = $1) AND role = 'pro'", 
+      "SELECT * FROM users WHERE email = $1 OR phone_number = $1", 
       [identifier]
     );
     
@@ -89,21 +87,41 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials." });
     }
 
-    const pro = result.rows[0];
+    const user = result.rows[0];
 
-    const isMatch = await bcrypt.compare(password, pro.password);
+    // 2. SPECIFIC ROLE CHECKS
+    if (user.role === 'customer') {
+      return res.status(403).json({ 
+        message: "Please use the Customer login page." 
+      });
+    }
+
+    if (user.role === 'admin') {
+      return res.status(403).json({ 
+        message: "Admins must use the Management Console." 
+      });
+    }
+
+    // Ensure they are a 'pro' before proceeding
+    if (user.role !== 'pro') {
+      return res.status(403).json({ message: "Access denied for this account type." });
+    }
+
+    // 3. Verify Password
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials." });
     }
 
-    if (!pro.is_verified) {
+    // 4. Verification Check (Pro-specific feature)
+    if (!user.is_verified) {
       return res.status(403).json({ message: "Account pending approval. Please check back later." });
     }
    
-  
+    // 5. Success
     const token = jwt.sign(
-      { id: pro.id, role: pro.role }, 
-      process.env.JWT_SECRET, // In production, put this in .env
+      { id: user.id, role: user.role }, 
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
@@ -111,17 +129,17 @@ router.post('/login', async (req, res) => {
       message: "Login successful",
       token,
       user: {
-        id: pro.id,
-        role:pro.role
+        id: user.id,
+        role: user.role,
+        name: user.name // Good to include for the dashboard greeting
       }
     });
-     
+      
   } catch (err) {
     console.error("Login Error:", err.message);
     res.status(500).json({ message: "Server Error" });
   }
 });
-
 const verifyToken = (req, res, next) => {
 
     const authHeader = req.header("Authorization");

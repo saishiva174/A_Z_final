@@ -14,6 +14,7 @@ import  AdminProDetail from './pages/admin/AdminProDetail';
 import AdminCustomerDetail from './pages/admin/AdminCustomerDetail';
 import ProtectedRoute from './pages/logins/ProtectedRoutes';
 import ViewProfessional from './pages/customer/ViewProfessional';
+import EmailVerification from './pages/logins/EmailVerification';
 function App() {
   return (
     <Router>
@@ -34,6 +35,7 @@ function App() {
          <Route path="/customer-login" element={<CustomerLogin/>}/>
          <Route path="/pro-login" element={<ProfessionalLogin/>}/>
          <Route path="/pro-signup" element={<ProfessionalSignup/>}/>
+         <Route path="/verify-email" element={<EmailVerification />} />
          
          
          

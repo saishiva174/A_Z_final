@@ -4,7 +4,7 @@ import adminRoutes from './routes/adminRoutes.js'// Note the .js extension is of
 import userRoutes from './routes/userRoutes.js';
 import proRoutes from'./routes/proRoutes.js';
 import bookingRoutes from'./routes/bookingRoutes.js';
-
+import authRoutes from './routes/authRoutes.js';
 const app = express();
 
 // Make sure you have BOTH your local and Vercel links
@@ -26,6 +26,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes); 
 app.use('/api/pro',proRoutes);
 app.use('/api/bookings',bookingRoutes)
+app.use('/api/auth',authRoutes);
 // index.js 
 
 // This tells Express to serve everything in the 'uploads' folder as a public URL

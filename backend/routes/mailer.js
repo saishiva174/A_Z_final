@@ -1,31 +1,19 @@
 import nodemailer from 'nodemailer';
 import dns from 'node:dns';
-dns.setDefaultResultOrder('ipv4first'); // This is the magic line
 
-const transporter = nodemailer.createTransport({
-  // Use the direct IP for Gmail's SMTP server to bypass DNS issues
-  host: '74.125.20.108', 
-  port: 587,
-  secure: false, 
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  tls: {
-    // This MUST match the actual domain name for the certificate to work
-    servername: 'smtp.gmail.com', 
-    rejectUnauthorized: false 
-  }
-});
-// Final check: Some environments still need the family forced
-transporter.options.family = 4;
+
+import { Resend } from 'resend';
+
+// Initialize Resend with your API Key from Render's Env Vars
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 export const sendOTPEmail = async (email, otp) => {
-  const mailOptions = {
-    // It's best if the 'from' email matches the 'user' in auth
-    from: `"A-Z Services" <${process.env.EMAIL_USER}>`, 
-    to: email,
-    subject: 'Verify your email - A-Z Services',
-    html: `
+  try {
+    const data = await resend.emails.send({
+      from: 'onboarding@resend.dev', // Resend provides this for testing
+      to: email,
+      subject: 'Verify your email - A-Z Services',
+       html: `
       <div style="font-family: sans-serif; text-align: center; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
         <h2 style="color: #4f46e5;">Email Verification</h2>
         <p>Your verification code for A-Z Services is:</p>
@@ -34,14 +22,11 @@ export const sendOTPEmail = async (email, otp) => {
         <p style="font-size: 12px; color: #999;">If you didn't request this, please ignore this email.</p>
       </div>
     `,
-  };
-
-  try {
-    const info = await transporter.sendMail(mailOptions);
-  
-    return info;
+    });
+    return data;
   } catch (error) {
-    console.error("Nodemailer Error: ", error);
-    throw error; // Throwing the error helps the controller catch it
+    console.error("Resend Error:", error);
+    throw error;
   }
 };
+

@@ -22,14 +22,14 @@ const Home = () => {
         <p>Book trusted experts for repairs and maintenance, or grow your own service business today.</p>
 
         <div className="card-grid"> 
-          <Link to="/customer-signup" className="action-card">
+          <Link to="/customer-login" className="action-card">
             <div className="card-icon">🏠</div>
             <h3>I need a Service</h3>
             <p>Find vetted experts for plumbing, electrical, cleaning, and more.</p>
             <span className="card-link">Browse Services →</span>
           </Link>
 
-          <Link to="/pro-signup" className="action-card">
+          <Link to="/pro-login" className="action-card">
             <div className="card-icon">🛠️</div>
             <h3>Join as a Professional</h3>
             <p>Verify your identity, list your skills, and start earning today.</p>

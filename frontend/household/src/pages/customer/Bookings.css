@@ -1,59 +1,161 @@
-/* --- 1. PRICE EDITING (INLINE) --- */
+/* --- 1. CONTAINER & LIST --- */
+.bookings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-top: 1rem;
+}
+
+/* --- 2. THE BOOKING ROW --- */
+.booking-row {
+  background: white;
+  border-radius: 20px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #f1f5f9;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.booking-row:hover {
+  transform: translateX(5px);
+  border-color: #3b82f6;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+/* --- 3. LEFT SECTION: INFO & AVATAR --- */
+.book-info {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex: 2;
+}
+
+.pro-avatar-wrapper {
+  position: relative;
+  width: 56px;
+  height: 56px;
+}
+
+.pro-row-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.book-icon-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  background: #3b82f6;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border: 2px solid white;
+}
+
+.book-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+.book-info p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+/* --- 4. CENTER SECTION: STATUS & PRICE --- */
+.book-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.status-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Status Dynamic Colors */
+.status-tag.pending { background: #fff7ed; color: #ea580c; }
+.status-tag.accepted { background: #f0fdf4; color: #16a34a; }
+.status-tag.cancelled { background: #fef2f2; color: #dc2626; }
+
+.book-price {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Inline Price Input */
 .price-edit-box {
   display: flex;
   align-items: center;
-  background: #f1f5f9;
-  padding: 4px 10px;
-  border-radius: 10px;
-  border: 1.5px solid #e2e8f0;
-  transition: all 0.2s;
-}
-
-.price-edit-box:focus-within {
-  border-color: #3b82f6;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.price-edit-box span {
-  font-weight: 700;
-  color: #64748b;
-  margin-right: 4px;
+  gap: 4px;
+  background: #f8fafc;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
 }
 
 .inline-price-input {
+  width: 60px;
   border: none;
   background: transparent;
-  width: 70px;
-  font-weight: 700;
+  font-weight: 800;
   color: #0f172a;
-  font-size: 1rem;
   outline: none;
+  text-align: left;
 }
 
-/* --- 2. STATUS TAGS (ACTIVE) --- */
-.status-tag.pending {
-  background: #fffbeb;
-  color: #b45309; /* Amber for Pending */
-}
-
-.status-tag.accepted {
-  background: #eff6ff;
-  color: #1d4ed8; /* Blue for Accepted */
-}
-
-/* --- 3. ACTION BUTTONS --- */
+/* --- 5. RIGHT SECTION: ACTIONS --- */
 .booking-actions {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 1.5;
+  justify-content: flex-end;
 }
 
-/* Cancel Request (Outline Style) */
+.chat-btn, .icon-btn {
+  background: #f1f5f9;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #475569;
+  transition: all 0.2s;
+}
+
+.chat-btn:hover { background: #e2e8f0; color: #2563eb; }
+
 .cancel-btn-outline {
   background: transparent;
-  border: 1.5px solid #fecdd3;
-  color: #e11d48;
+  border: 1.5px solid #e2e8f0;
+  color: #64748b;
   padding: 8px 16px;
   border-radius: 10px;
   font-weight: 600;
@@ -63,34 +165,13 @@
 }
 
 .cancel-btn-outline:hover {
-  background: #fff1f2;
-  border-color: #e11d48;
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
 }
 
-/* Chat Button (Circular/Square) */
-.chat-btn {
-  background: #f1f5f9;
-  border: none;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #334155;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.chat-btn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
-  transform: scale(1.05);
-}
-
-/* Mark Completed (Primary Action) */
 .complete-action-btn {
-  background: #10b981; /* Emerald Green */
+  background: #0f172a;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -98,16 +179,10 @@
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
-  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
 }
 
-.complete-action-btn:hover {
-  background: #059669;
-  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
-}
-
-/* --- 4. HALF-SCREEN ADJUSTMENTS --- */
-@media (max-width: 900px) {
+/* --- 6. MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
   .booking-row {
     flex-direction: column;
     align-items: flex-start;
@@ -115,45 +190,110 @@
     padding: 1.5rem;
   }
 
-  .book-status {
+  .book-info {
     width: 100%;
+  }
+
+  .book-status {
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
     border-top: 1px solid #f1f5f9;
     padding-top: 1rem;
   }
 
   .booking-actions {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: space-between;
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 12px;
   }
-
+  
   .cancel-btn-outline, .complete-action-btn {
-    flex: 1; /* Buttons take more space on half-screen */
+    flex: 1;
     text-align: center;
   }
 }
 
+/* --- 1. Fix Heading Alignment --- */
+.view-header {
+  display: flex;
+  justify-content: flex-start; /* Forces content to start at the left */
+  width: 100%;
+  margin-bottom: 2rem;
+}
 
+.view-header h1 {
+  text-align: left; /* Ensures text stays left on desktop */
+  margin: 0;
+  color: #0f172a;
+}
 
-
+/* --- 2. Mobile Specific Overrides --- */
 @media (max-width: 600px) {
-  /* Targeted reset for the header and title */
-  div.tab-view header.view-header,
-  header.view-header,
+  /* Keep heading centered on mobile as is standard for dashboards */
   .view-header h1 {
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-    text-align: left !important;
-    position: static !important; /* In case it was absolute/relative */
-    width: 100% !important;
-    display: block !important;
+    text-align: center !important;
+    width: 100%;
   }
 
-  /* Reset the parent container in case it has a padding/margin */
-  .tab-view {
-    padding-left: 15px !important; /* Small padding so it doesn't touch the glass */
-    margin-left: 0 !important;
-    width: 100vw !important;
+  /* Force Cancel Button to be Red and Visible on Mobile */
+  .cancel-btn-outline {
+    background-color: #fff1f2 !important; /* Light red background */
+    color: #e11d48 !important;            /* Bold red text */
+    border: 2px solid #fda4af !important; /* Red border */
+    width: 100% !important;               /* Full width for easier clicking */
+    padding: 12px !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .cancel-btn-outline:active {
+    background-color: #ffe4e6 !important;
+  }
+
+  /* Ensure the button icon (if any) also turns red */
+  .cancel-btn-outline svg {
+    color: #e11d48 !important;
+  }
+}
+/* --- 1. CONTAINER: Centering the list block --- */
+.bookings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-top: 1rem;
+  
+  /* Centering Logic */
+  max-width: 900px;  /* Limits the width so it's not stretched too far */
+  margin: 0 auto;    /* Mathematical horizontal centering */
+  width: 100%;       /* Fluid width for responsiveness */
+}
+
+/* --- 2. HEADER: Centering the heading --- */
+.view-header {
+  display: flex;
+  justify-content: center; /* Centers the H1 inside the header div */
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.view-header h1 {
+  text-align: center; /* Ensures the text itself is centered */
+  width: 100%;
+  margin: 0;
+}
+
+/* --- 3. MOBILE RESPONSIVE: Maintain alignment --- */
+@media (max-width: 768px) {
+  .bookings-container {
+    max-width: 100%;   /* Use full width on smaller screens */
+    padding: 0 15px;   /* Small side gutter so cards don't touch edges */
+    margin: 0 auto;
   }
 }

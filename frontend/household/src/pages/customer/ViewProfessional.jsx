@@ -1,14 +1,16 @@
 import  { useState, useEffect } from 'react';
 import {  FiMapPin, FiStar, FiChevronLeft,FiCamera} from 'react-icons/fi';
 import axios from 'axios';
+
 import './viewProfessional.css';
 import { API_URL } from '../../apiConfig';
-
-const ViewProfessional = ({ proId, onBack }) => {
-
+import { useParams, useNavigate } from 'react-router-dom';
+const ViewProfessional = () => {
+  const { proId } = useParams();
+  const navigate = useNavigate();
   const [loading,setLoading]=useState(true);
   const [details, setDetails] = useState(null);
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  
 
   useEffect(()=>{
   fetchProProfile(proId);
@@ -16,16 +18,7 @@ const ViewProfessional = ({ proId, onBack }) => {
 
 
 // Function to add new images to the existing list
-const handleFileChange = (e) => {
-  const newlySelected = Array.from(e.target.files);
-  setSelectedFiles((prevFiles) => [...prevFiles, ...newlySelected]);
-};
 
-// Function to remove a specific image
-const removeImage = (indexToRemove) => {
-  setSelectedFiles((prevFiles) =>     prevFiles.filter((_, index) => index !== indexToRemove)
-  );
-};
 
  const fetchProProfile = async (proId) => {
     try {
@@ -55,45 +48,11 @@ const removeImage = (indexToRemove) => {
     }
 };
 
-const handleBookingSubmit = async (e) => {
-  e.preventDefault();
-  
-  const formData = new FormData();
-  formData.append('customer_id', localStorage.getItem('userId'));
-  formData.append('pro_id', proId);
-  formData.append('service_type', bookingData.problemName);
-  formData.append('description', bookingData.description);
-  formData.append('location', bookingData.location);
-  formData.append('preferred_time', bookingData.preferredTime);
-  formData.append('budget', details.rate);
 
-  // Append multiple images
-  selectedFiles.forEach(file => {
-    formData.append('problem_images', file);
-  });
-
-  try {
-    await axios.post(`${API_URL}/api/users/book-job`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-    alert("Booking Request Sent!");
-    setShowBookingForm(false);
-  } catch (err) {
-    console.error(err);
-    alert("Error sending request");
-  }
-};
   
 
   
-  const [showBookingForm, setShowBookingForm] = useState(false);
-  const [bookingData, setBookingData] = useState({
-    problemName: '',
-    description: '',
-    location: '',
-    preferredTime: '',
-    budget: ''
-  });
+
 
  
 
@@ -108,7 +67,7 @@ const handleBookingSubmit = async (e) => {
 
   return (
     <div className="view-container">
-      <button className="back-btn" onClick={onBack}><FiChevronLeft /> Back to Browse</button>
+      <button className="back-btn" onClick={() => navigate(-1)}><FiChevronLeft /> Back to Browse</button>
 
       <div className="profile-card">
         <div className="profile-main-info">
@@ -126,7 +85,12 @@ const handleBookingSubmit = async (e) => {
           <div className="price-box">
             <p>Starting from</p>
             <h2>₹{details.rate}</h2>
-            <button className="book-trigger-btn" onClick={() => setShowBookingForm(true)}>Book Now</button>
+            <button 
+      className="book-trigger-btn" 
+      onClick={() => navigate(`/book/${proId}`)}
+    >
+      Book Now
+    </button>
           </div>
         </div>
       </div>
@@ -143,77 +107,7 @@ const handleBookingSubmit = async (e) => {
     </div>
   ))}
 </div>
-      {/* BOOKING MODAL */}
-      {showBookingForm && (
-        <div className="modal-overlay">
-          <div className="booking-modal animate-pop">
-            <div className="modal-header">
-              <h2>Create Booking Request</h2>
-              <p>Sent to: {details.name}</p>
-            </div>
-            <form onSubmit={handleBookingSubmit}>
-              <div className="form-row">
-                <label>Problem Title</label>
-                <input type="text" placeholder="e.g. Short circuit in kitchen" required 
-                  onChange={e => setBookingData({...bookingData, problemName: e.target.value})} />
-              </div>
-              <div className="form-row">
-                <label>Detailed Description</label>
-                <textarea placeholder="Tell the professional exactly what's wrong..." required
-                  onChange={e => setBookingData({...bookingData, description: e.target.value})} />
-              </div>
-              <div className="form-grid">
-                <div className="form-row">
-                  <label>Preferred Date & Time</label>
-                  <input type="datetime-local" required 
-                    onChange={e => setBookingData({...bookingData, preferredTime: e.target.value})} />
-                </div>
-                <div className="form-row">
-                  <label>Your Service Address</label>
-                  <input type="text" placeholder="House no, Street..." required 
-                    onChange={e => setBookingData({...bookingData, location: e.target.value})} />
-                </div>
-                <div className="form-row">
-  <label>Upload Problem Photos (Optional)</label>
-  <div className="upload-box">
-  <input 
-    type="file" 
-    multiple 
-    accept="image/*" 
-    onChange={handleFileChange} // Use the new append function
-    id="file-upload"
-    hidden
-  />
-  <label htmlFor="file-upload" className="file-label">
-    <FiCamera /> Add Photos
-  </label>
-  
-  <div className="preview-thumbnails">
-    {selectedFiles.map((file, idx) => (
-      <div key={idx} className="thumb-container">
-        <img src={URL.createObjectURL(file)} alt="preview" className="thumb" />
-        {/* Remove Button */}
-        <button 
-          type="button" 
-          className="remove-thumb" 
-          onClick={() => removeImage(idx)}
-        >
-          &times;
-        </button>
-      </div>
-    ))}
-  </div>
-</div>
-</div>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="cancel-btn" onClick={() => setShowBookingForm(false)}>Cancel</button>
-                <button type="submit" className="submit-btn">Confirm Request</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+     
     </div>
   );
 };

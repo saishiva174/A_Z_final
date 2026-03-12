@@ -26,6 +26,11 @@ const CustomerSignup = () => {
       setError("Please enter a valid 10-digit phone number.");
       return;
     }
+    
+    if (formData.password.length < 8) { // standard check
+    setError("Password must be at least 8 characters long.");
+    return;
+  }
 
     setLoading(true);
     setError('');

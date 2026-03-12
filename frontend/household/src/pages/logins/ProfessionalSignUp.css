@@ -1,205 +1,299 @@
-/* Layout Core */
+/* --- 1. GLOBAL CANVAS --- */
 .pro-signup-canvas {
   min-height: 100vh;
   background: #f8fafc;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 2rem;
   font-family: 'Inter', sans-serif;
 }
 
 .pro-signup-box {
-  display: flex;
   background: white;
   width: 100%;
-  max-width: 1000px;
-  min-height: 650px;
-  border-radius: 24px;
+  max-width: 1100px;
+  min-height: 700px;
+  border-radius: 32px;
+  display: flex;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
 }
 
-/* Sidebar Styling */
-.pro-brand-panel.small {
-  flex: 0.8;
-  background: #0f172a;
+/* --- 2. LEFT BRANDING PANEL --- */
+.pro-brand-panel {
+  flex: 1;
+  background: #0f172a; /* Deep Midnight Blue */
+  padding: 3rem;
   color: white;
-  padding: 50px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background glow */
+.pro-brand-panel::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
 }
 
 .back-link {
   color: #94a3b8;
   text-decoration: none;
-  font-size: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 40px;
+  font-weight: 600;
+  transition: color 0.2s;
+  z-index: 2;
+}
+
+.back-link:hover { color: white; }
+
+.brand-text {
+  margin-top: auto;
+  margin-bottom: auto;
+  z-index: 2;
 }
 
 .startup-tag {
-  color: #38bdf8;
+  background: #3b82f6;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 2px;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.brand-text h1 { font-size: 2.5rem; margin: 15px 0; line-height: 1.1; }
-.brand-text .blue { color: #38bdf8; }
-.brand-text p { color: #94a3b8; line-height: 1.6; margin-bottom: 30px; }
+.brand-text h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin: 1.5rem 0;
+  font-weight: 800;
+}
 
-.mini-list { list-style: none; padding: 0; }
-.mini-list li { color: #cbd5e1; margin-bottom: 12px; font-size: 14px; }
+.brand-text .blue { color: #3b82f6; }
 
-/* Form Styling */
+.brand-text p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.mini-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.mini-list li {
+  color: #3b82f6;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* --- 3. RIGHT FORM PANEL --- */
 .pro-form-panel {
   flex: 1.2;
-  padding: 40px 50px;
-  position: relative; /* Context for children */
+  padding: 3.5rem;
+  background: white;
+  overflow-y: auto;
 }
 
-.section-title { margin-bottom: 30px; }
-.section-title h2 { color: #1e293b; font-size: 1.5rem; }
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
 
+.section-title h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.progress-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e2e8f0;
+}
+
+.progress-dots span.active { background: #3b82f6; width: 24px; border-radius: 10px; }
+
+/* --- 4. FORM ELEMENTS --- */
 .pro-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 1.5rem;
 }
 
 .grid-subheading {
-  grid-column: span 2;
-  font-size: 11px;
+  grid-column: 1 / -1;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  color: #6366f1;
+  color: #94a3b8;
   letter-spacing: 1px;
-  margin: 10px 0 5px;
+  margin-top: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.5rem;
 }
 
-.full-row { grid-column: span 2; }
-
-/* Custom Inputs */
-.field-group { position: relative; } /* CRITICAL: Anchor for dropdown */
+.field-group { position: relative; }
+.full-row { grid-column: 1 / -1; }
 
 .custom-input {
+  position: relative;
   display: flex;
   align-items: center;
-  background: #f1f5f9;
-  border: 1.5px solid transparent;
-  border-radius: 10px;
-  padding: 0 12px;
-  transition: all 0.2s;
 }
 
-.custom-input:focus-within {
-  background: white;
-  border-color: #38bdf8;
-  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+.custom-input .i {
+  position: absolute;
+  left: 1rem;
+  color: #94a3b8;
+  font-size: 1.1rem;
 }
-
-.custom-input .i { color: #64748b; margin-right: 10px; }
 
 .custom-input input {
   width: 100%;
-  border: none;
-  padding: 12px 0;
-  background: transparent;
-  outline: none;
-  font-size: 0.9rem;
-  color: #1e293b;
+  padding: 0.8rem 1rem 0.8rem 3rem;
+  border: 2px solid #f1f5f9;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background: #f8fafc;
 }
 
-/* FIXED DROPDOWN LOGIC */
+.custom-input input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Eye icon for password */
+.eye {
+  position: absolute;
+  right: 1rem;
+  cursor: pointer;
+  color: #94a3b8;
+  display: flex;
+}
+
+/* Profession Dropdown */
 .custom-dropdown {
   position: absolute;
-  top: calc(100% + 5px); /* Forces it to float below input */
+  top: 100%;
   left: 0;
-  width: 100%;
+  right: 0;
   background: white;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
+  border-radius: 12px;
+  margin-top: 5px;
   max-height: 200px;
   overflow-y: auto;
-  z-index: 9999; /* Forces it to stay on top of everything */
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  animation: slideIn 0.2s ease-out;
+  z-index: 100;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .drop-item {
-  padding: 10px 15px;
+  padding: 0.8rem 1rem;
   cursor: pointer;
-  font-size: 13px;
-  color: #475569;
+  font-size: 0.9rem;
+  transition: background 0.2s;
 }
 
-.drop-item:hover {
-  background: #f1f5f9;
-  color: #38bdf8;
-}
+.drop-item:hover { background: #eff6ff; color: #3b82f6; }
 
-/* File Upload & Button */
+/* File Upload Style */
 .file-label {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 10px;
+  padding: 0.8rem 1rem;
   background: #f1f5f9;
-  border: 1.5px dashed #cbd5e1;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 13px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
   cursor: pointer;
-  height: 44px;
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
 }
 
+.file-label:hover { background: #e2e8f0; border-color: #94a3b8; }
+
+/* --- 5. ACTION BUTTONS --- */
 .pro-action-btn {
-  grid-column: span 2;
+  grid-column: 1 / -1;
   background: #0f172a;
   color: white;
-  padding: 14px;
-  border-radius: 10px;
+  padding: 1rem;
   border: none;
-  font-weight: 600;
-  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.pro-action-btn:hover { background: #1e293b; transform: translateY(-2px); }
+.pro-action-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+.alert-box {
+  background: #fff1f2;
+  color: #e11d48;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid #ffe4e6;
 }
 
 .pro-login-footer {
   text-align: center;
-  font-size: 13px;
-  margin-top: 20px;
+  margin-top: 2rem;
   color: #64748b;
+  font-size: 0.95rem;
 }
 
-.pro-login-footer a { color: #38bdf8; font-weight: 600; text-decoration: none; }
+.pro-login-footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
 
-.alert-box {
-  background: #fef2f2;
-  color: #ef4444;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  margin-bottom: 20px;
-  border: 1px solid #fee2e2;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive */
-@media (max-width: 850px) {
+/* --- 6. RESPONSIVENESS --- */
+@media (max-width: 900px) {
   .pro-signup-box { flex-direction: column; }
-  .pro-brand-panel.small { padding: 30px; }
+  .pro-brand-panel { padding: 2rem; min-height: auto; }
+  .brand-text h1 { font-size: 2.5rem; }
+  .mini-list { display: flex; gap: 1rem; }
+  .pro-form-panel { padding: 2rem; }
+}
+
+@media (max-width: 600px) {
   .pro-form-grid { grid-template-columns: 1fr; }
-  .grid-subheading, .full-row, .pro-action-btn { grid-column: span 1; }
+  .pro-signup-canvas { padding: 0.5rem; }
+  .pro-signup-box { border-radius: 0; }
+  .mini-list { flex-direction: column; }
 }

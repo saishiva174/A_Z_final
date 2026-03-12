@@ -2,11 +2,12 @@ import  { useEffect,useState } from 'react'
 import './TabView.css'
 import { FiSearch ,FiStar,FiMapPin} from 'react-icons/fi'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 import { DEFAULT_AVATAR } from '../../utils/utils'
 import ViewProfessional from './ViewProfessional';
 import { API_URL } from '../../apiConfig';
 const TabView = () => {
- 
+ const navigate = useNavigate();
   useEffect(()=>{
    fetchPros();
   },[])
@@ -14,7 +15,7 @@ const TabView = () => {
   const [availablePros,setavailablePros] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading,setLoading]=useState(true);
-  const [selectedProId, setSelectedProId] = useState(null);
+
   const fetchPros = async () => {
     try {
         setLoading(true);
@@ -50,14 +51,7 @@ const TabView = () => {
       </div>
     );
   }
-   if (selectedProId) {
-    return (
-      <ViewProfessional 
-        proId={selectedProId} 
-        onBack={() => setSelectedProId(null)} 
-      />
-    );
-  }
+   
   return (
     <div className="tab-view">
                 <header className="view-header">
@@ -75,7 +69,7 @@ const TabView = () => {
                     />
                   </div>
                 </header>
-                {loading && <div className="loader">Searching for experts...</div>}
+              
     
                 <div className="pro-grid">
                   {filteredPros.length > 0 ? filteredPros.map(pro => (
@@ -91,7 +85,7 @@ const TabView = () => {
                           <span className="rating"><FiStar /> {pro.rating} ({pro.review_count})</span>
                           <span className="location"><FiMapPin /> {pro.location}</span>
                         </div>
-                        <button className="primary-btn full-width" onClick={()=>setSelectedProId(pro.id)}>View Profile & Book</button>
+                        <button className="primary-btn full-width" onClick={() => navigate(`/pro-profile/${pro.id}`)}>View Profile & Book</button>
                       </div>
                     </div>
                   )) : (

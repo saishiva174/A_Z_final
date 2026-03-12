@@ -1,62 +1,47 @@
-:root {
-  --sidebar-width: 280px;
-  --sidebar-collapsed: 80px;
-  --primary-navy: #0f172a;
-  --accent-blue: #3b82f6;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --bg-slate: #f8fafc;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
+/* --- 1. BASE LAYOUT --- */
 .customer-container {
   display: flex;
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--bg-slate);
-  overflow: hidden; /* Prevents double scrollbars */
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'Inter', sans-serif;
 }
 
-/* --- 1. SIDEBAR --- */
+/* --- 2. DESKTOP SIDEBAR --- */
 .customer-sidebar {
-  width: var(--sidebar-width);
-  background: white;
+  width: 280px;
+  background-color: #ffffff;
   border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.25rem;
-  flex-shrink: 0;
-  transition: var(--transition);
-  z-index: 50;
+  padding: 2rem 1.5rem;
+  position: fixed;
+  height: 100vh;
+  z-index: 100;
 }
 
 .sidebar-brand {
   font-size: 1.5rem;
-  font-weight: 900;
-  color: var(--primary-navy);
-  letter-spacing: -1px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
   margin-bottom: 2.5rem;
-  padding-left: 0.5rem;
+  text-align: center;
 }
 
-/* User Profile Section in Sidebar */
 .sidebar-user-info {
-  background: var(--bg-slate);
-  padding: 1.5rem;
-  border-radius: 24px;
   text-align: center;
-  margin-bottom: 2rem;
-  transition: var(--transition);
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .sidebar-avatar {
   width: 80px;
   height: 80px;
   margin: 0 auto 1rem;
-  border-radius: 24px;
+  border-radius: 50%;
   overflow: hidden;
-  border: 4px solid white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 3px solid #3b82f6;
 }
 
 .sidebar-avatar img {
@@ -67,167 +52,154 @@
 
 .sidebar-user-info h4 {
   margin: 0;
+  color: #1e293b;
   font-size: 1.1rem;
-  color: var(--primary-navy);
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .sidebar-user-info p {
-  margin: 0.25rem 0 0;
-  font-size: 0.8rem;
-  color: var(--accent-blue);
-  font-weight: 600;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.25rem;
 }
 
-/* --- 2. NAVIGATION --- */
+/* --- 3. NAVIGATION BUTTONS --- */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex: 1;
+  flex-grow: 1;
 }
 
-.sidebar-nav button {
+.sidebar-nav button, .sidebar-logout {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
+  gap: 12px;
+  padding: 0.85rem 1rem;
   border: none;
   background: transparent;
-  border-radius: 16px;
-  color: var(--text-muted);
+  border-radius: 12px;
+  color: #64748b;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.2s ease;
+  width: 100%;
   text-align: left;
 }
 
-.sidebar-nav button svg {
+.sidebar-nav button svg, .sidebar-logout svg {
   font-size: 1.2rem;
-  flex-shrink: 0;
 }
 
 .sidebar-nav button:hover {
-  background: #f1f5f9;
-  color: var(--primary-navy);
+  background-color: #f1f5f9;
+  color: #0f172a;
 }
 
 .sidebar-nav button.active {
-  background: var(--primary-navy);
-  color: white;
-  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+  background-color: #eff6ff;
+  color: #2563eb;
 }
 
 .sidebar-logout {
   margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border: none;
-  background: #fff1f2;
-  color: #e11d48;
-  border-radius: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.2s;
+  color: #ef4444;
 }
 
 .sidebar-logout:hover {
-  background: #ffe4e6;
+  background-color: #fef2f2;
 }
 
-/* --- 3. MAIN CONTENT --- */
+/* --- 4. MAIN CONTENT AREA --- */
 .customer-main-content {
-  flex: 1;
-  overflow-y: auto;
-  height: 100vh;
-  position: relative;
-  /* Smooth scroll for better UX */
-  scroll-behavior: smooth;
+  flex-grow: 1;
+  margin-left: 280px; /* Same as sidebar width */
+  padding: 2rem;
+  width: calc(100% - 280px);
 }
 
-/* --- 4. HALF-SCREEN RESPONSIVENESS --- */
-@media (max-width: 1000px) {
+/* --- 5. MOBILE RESPONSIVENESS (The Bottom Bar) --- */
+@media (max-width: 1024px) {
   .customer-sidebar {
-    width: var(--sidebar-collapsed);
-    padding: 2rem 0.75rem;
-    align-items: center;
+    width: 240px;
   }
-
-  /* Hide labels, keep icons */
-  .sidebar-brand, 
-  .sidebar-user-info h4, 
-  .sidebar-user-info p,
-  .sidebar-nav button span,
-  .sidebar-logout span {
-    display: none;
-  }
-
-  .sidebar-user-info {
-    background: transparent;
-    padding: 0;
-  }
-
-  .sidebar-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    margin-bottom: 0;
-  }
-
-  .sidebar-nav button {
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .sidebar-logout {
-    justify-content: center;
+  .customer-main-content {
+    margin-left: 240px;
+    width: calc(100% - 240px);
   }
 }
 
-/* Mobile adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .customer-container {
     flex-direction: column;
   }
-  
+
   .customer-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 70px;
     flex-direction: row;
-    padding: 0.75rem;
+    padding: 0 10px;
     border-right: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+    align-items: center;
+    justify-content: center; /* Keep tabs centered */
   }
 
-  .sidebar-user-info, .sidebar-brand {
+  /* Hide Brand and User Info on Mobile Bottom Bar */
+  .sidebar-brand, .sidebar-user-info {
     display: none;
   }
 
   .sidebar-nav {
     flex-direction: row;
     justify-content: space-around;
+    width: 100%;
+    gap: 0;
+  }
+
+  .sidebar-nav button, .sidebar-logout {
+    flex-direction: column;
+    padding: 8px 0;
+    gap: 4px;
+    font-size: 0.7rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+  }
+
+  .sidebar-nav button span, .sidebar-logout span {
+    display: block; /* Text below icon */
+    font-size: 10px;
+  }
+
+  .sidebar-nav button svg, .sidebar-logout svg {
+    font-size: 1.4rem;
   }
 
   .sidebar-logout {
     margin-top: 0;
-    padding: 0.75rem;
+    width: auto;
+    padding: 8px 10px;
+  }
+
+  .customer-main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    padding-bottom: 90px; /* Room for the bottom bar */
   }
 }
 
-/* LOADER UTILITY */
+/* Loader Styling */
 .loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
   width: 40px;
   height: 40px;
-  border: 4px solid #e2e8f0;
-  border-top: 4px solid var(--primary-navy);
-  border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 20px auto;
 }
@@ -236,102 +208,3 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-
-
-
-
-
-
-@media (max-width: 600px) {
-  .customer-container {
-    flex-direction: column;
-    height: 100vh;
-  }
-
-  .customer-sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw; /* Use Viewport Width to be safe */
-    height: 65px;
-    background: white !important;
-    border-top: 1px solid #e2e8f0;
-    padding: 0 !important;
-    margin: 0 !important;
-    z-index: 1000;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .sidebar-brand, 
-  .sidebar-user-info {
-    display: none !important;
-  }
-
-  .sidebar-nav {
-    display: flex !important;
-    flex-direction: row !important;
-    flex: 4 !important; /* Takes 80% of space */
-    height: 100% !important;
-    gap: 0 !important;
-  }
-
-  /* Universal style for ALL 5 buttons */
-  .sidebar-nav button, 
-  .sidebar-logout {
-    flex: 1 !important;
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 2px !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    color: var(--text-muted) !important;
-    font-size: 10px !important;
-    /* This prevents icons from disappearing on click */
-    opacity: 1 !important; 
-    visibility: visible !important;
-  }
-
-  .sidebar-nav button svg, 
-  .sidebar-logout svg {
-    font-size: 1.3rem !important;
-    display: block !important; /* Ensures the icon stays visible */
-  }
-
-  /* Active Tab Fix */
-  .sidebar-nav button.active {
-    color: var(--accent-blue) !important;
-    background: transparent !important;
-    box-shadow: none !important;
-  }
-
-  /* Logout Button Fix: Shrink it to match the rest */
-  .sidebar-logout {
-    flex: 1 !important; /* Same size as others */
-    color: #e11d48 !important;
-    min-width: 0 !important; /* Allows it to shrink if needed */
-  }
-
-  .sidebar-logout span {
-    display: block !important; /* Keep the 'Logout' text if you want, or none for icons-only */
-  }
-
-  /* Prevent content from hiding behind the bar */
-  .customer-main-content {
-    height: calc(100vh - 65px) !important;
-    padding-bottom: 80px !important; /* Extra padding so bottom of list is reachable */
-  }
-}
-
-
-
-
-

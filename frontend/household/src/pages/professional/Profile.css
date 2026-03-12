@@ -241,3 +241,92 @@
     grid-column: span 1;
   }
 }
+/* --- 1. MAIN CONTAINER --- */
+.tab-view {
+  padding: 2rem;
+  max-width: 1200px; /* Same as TabView for consistency */
+  margin: 0 auto;    /* Mathematical horizontal center */
+  width: 100%;
+}
+
+/* --- 2. HEADER CENTERED --- */
+.view-header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.view-header h1 {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
+
+/* --- 3. PROFILE CARD: Centering & Width --- */
+.profile-settings-card {
+  background: white;
+  border-radius: 24px;
+  border: 1px solid #f1f5f9;
+  padding: 2.5rem;
+  max-width: 800px; /* Limits width to keep the form readable */
+  margin: 0 auto;   /* Centers the card on the page */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* --- 4. AVATAR SECTION --- */
+.avatar-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the avatar, name, and subtitle */
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.large-avatar {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1rem;
+}
+
+.large-avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #f8fafc;
+}
+
+/* --- 5. MOBILE VIEW FIXES --- */
+@media (max-width: 768px) {
+  /* Reduce side padding for the dashboard container */
+  .tab-view {
+    padding: 1rem !important; /* Reduces the large 2rem padding */
+  }
+
+  .profile-settings-card {
+    padding: 1.5rem !important; /* Tighter padding on small screens */
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px;
+  }
+
+  .input-grid {
+    display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    gap: 1.2rem;
+  }
+
+  /* Force buttons to be full width or centered on mobile */
+  .form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-actions button {
+    width: 100%;
+    padding: 12px;
+  }
+}

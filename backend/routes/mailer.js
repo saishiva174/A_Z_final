@@ -1,32 +1,29 @@
-import nodemailer from 'nodemailer';
-import dns from 'node:dns';
+import emailjs from '@emailjs/nodejs';
 
-
-import { Resend } from 'resend';
-
-// Initialize Resend with your API Key from Render's Env Vars
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export const sendOTPEmail = async (email, otp) => {
+export const sendOTPEmail = async (userEmail, otp) => {
   try {
-    const data = await resend.emails.send({
-      from: `${process.env.EMAil_USER}`, // Resend provides this for testing
-      to: email,
-      subject: 'Verify your email - A-Z Services',
-       html: `
-      <div style="font-family: sans-serif; text-align: center; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-        <h2 style="color: #4f46e5;">Email Verification</h2>
-        <p>Your verification code for A-Z Services is:</p>
-        <h1 style="color: #4f46e5; letter-spacing: 8px; font-size: 32px;">${otp}</h1>
-        <p style="color: #666;">This code will expire in 10 minutes.</p>
-        <p style="font-size: 12px; color: #999;">If you didn't request this, please ignore this email.</p>
-      </div>
-    `,
-    });
-    return data;
+    // These values must match the keys you set in Render
+    const templateParams = {
+      otp: otp,           // Matches {{otp}} in your HTML
+      to_email: userEmail, // Matches {{to_email}} in your EmailJS Settings
+    };
+
+    const result = await emailjs.send(
+      process.env.EMAILJS_SERVICE_ID,
+      process.env.EMAILJS_TEMPLATE_ID,
+      templateParams,
+      {
+        publicKey: process.env.EMAILJS_PUBLIC_KEY,
+        privateKey: process.env.EMAILJS_PRIVATE_KEY,
+      }
+    );
+
+    console.log("✅ EmailJS Success:", result.text);
+    return result;
   } catch (error) {
-    console.error("Resend Error:", error);
+    // This logs the error and the OTP so you don't get stuck during testing
+    console.error("❌ EmailJS Failed. Error:", error);
+    console.log("DEBUG: Your OTP is:", otp); 
     throw error;
   }
 };
-

@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes.js';
 import proRoutes from'./routes/proRoutes.js';
 import bookingRoutes from'./routes/bookingRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import 'dotenv/config';
 const app = express();
 
 // Make sure you have BOTH your local and Vercel links

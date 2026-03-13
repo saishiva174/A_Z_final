@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendOTPEmail = async (email, otp) => {
   try {
     const data = await resend.emails.send({
-      from: 'onboarding@resend.dev', // Resend provides this for testing
+      from: `${process.env.EMAil_USER}`, // Resend provides this for testing
       to: email,
       subject: 'Verify your email - A-Z Services',
        html: `

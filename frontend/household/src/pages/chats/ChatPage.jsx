@@ -52,6 +52,13 @@ export const ChatPage = () => {
   };
 
   useEffect(() => {
+  if (bookingId) {
+    console.log("Emitting join_booking for ID:", bookingId);
+    socket.emit('join_booking', String(bookingId));
+  }
+}, [bookingId]);
+
+  useEffect(() => {
     const fetchChatData = async () => {
       try {
         const token = localStorage.getItem('token');

@@ -2,6 +2,7 @@ import { Server } from 'socket.io'; // 👈 Use import
 
 const initSocket = (server, pool) => {
   const io = new Server(server, {
+    path: "/socket.io/",
   cors: {
     origin: ["http://localhost:5173", "https://a-z-final-c6n4.vercel.app"], // Must match server.js
     methods: ["GET", "POST"],

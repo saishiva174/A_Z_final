@@ -23,7 +23,7 @@ export const sendOTPEmail = async (userEmail, otp) => {
   } catch (error) {
     // This logs the error and the OTP so you don't get stuck during testing
     console.error("❌ EmailJS Failed. Error:", error);
-    console.log("DEBUG: Your OTP is:", otp); 
+
     throw error;
   }
 };

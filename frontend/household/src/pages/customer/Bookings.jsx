@@ -4,8 +4,10 @@ import { FiMessageSquare,FiCalendar,FiXCircle,FiClock ,FiChevronRight} from 'rea
 import { formatDateTime,handleUpdateStatus } from '../../utils/utils';
 import './Bookings.css'
 import { API_URL } from '../../apiConfig';
+import { useNavigate } from 'react-router-dom';
 const Bookings = ({myBookings,setSelectedBooking,setMyBookings}) => {
 
+  const navigate = useNavigate();
   
   const handleUpdateBooking=async(bookingId,newStatus)=>{
 
@@ -45,6 +47,12 @@ const Bookings = ({myBookings,setSelectedBooking,setMyBookings}) => {
       alert("Failed to update price. Please try again.");
     }
   };
+
+  const handleChat = (book) => {
+  // Instead of just setting state, we change the URL
+  // This takes the user to /chat/123
+  navigate(`/chat/${book.id}`); 
+};
 
   return (
     <div className="tab-view">

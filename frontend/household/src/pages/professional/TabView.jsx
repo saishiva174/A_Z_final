@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { formatDateTime, handleUpdateStatus, DEFAULT_AVATAR } from '../../utils/utils';
 import { FiClock, FiPhone, FiMapPin, FiImage, FiCheck, FiMessageSquare, FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import './TabView.css';
-
+import { useNavigate } from 'react-router-dom';
 const TabView = ({ jobs, setJobs }) => {
   const [selectedJobPics, setSelectedJobPics] = useState(null);
   // NEW: State for the currently zoomed-in single image
@@ -27,6 +27,12 @@ const TabView = ({ jobs, setJobs }) => {
     setSelectedJobPics(null);
     setActiveImage(null);
   };
+   const navigate = useNavigate();
+  const handleChat = (book) => {
+  // Instead of just setting state, we change the URL
+  // This takes the user to /chat/123
+  navigate(`/prochat/${book.id}`); 
+};
 
   return (
     <>
@@ -77,7 +83,7 @@ const TabView = ({ jobs, setJobs }) => {
                 </div>
                 
                 <div className="button-group">
-                  <button className="chat-btn-square" title="Chat with Customer">
+                  <button className="chat-btn-square" title="Chat with Customer" onClick={() => handleChat(job)}>
                     <FiMessageSquare />
                   </button>
                   <button className="reject-btn" onClick={() => handleUpdateBooking(job.id, "Declined")}>

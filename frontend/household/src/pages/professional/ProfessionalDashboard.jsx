@@ -8,30 +8,30 @@ import TabView from './TabView';
 import History from './History';
 import Profile from './Profile';
 import { API_URL } from '../../apiConfig';
-
+import { useSearchParams } from 'react-router-dom';
 
 const DEFAULT_AVATAR = `https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=`;
 
 const ProfessionalDashboard = () => {
-  const [activeTab, setActiveTab] = useState('overview')
+ 
   const [profile, setProfile] = useState({});
   const[profilePicFile,setProfilePicFile]=useState(null);
   const [editData, setEditData] = useState({});
   const [loading,setLoading]=useState(true);
   const [jobs, setJobs] = useState({});
-
+ const [searchParams, setSearchParams] = useSearchParams();
 
  const [stats, setStats] = useState({ total_earnings: 0, completed_jobs: 0, rating: 0 });
  const [history, setHistory] = useState([]);
 
-
+const activeTab = searchParams.get('tab') || 'overview';
 
 useEffect(() => {
         fetchRequests();    
 }, [activeTab]);
 
   useEffect(() => {
-    const id=localStorage.getItem("proId");
+    const id=localStorage.getItem("userId");
     if(id){
    fetchProProfile(id);
     }
@@ -127,7 +127,9 @@ await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
   };
 
 
-
+const goToTab = (tabName) => {
+  setSearchParams({ tab: tabName });
+};
 const fetchRequests = async () => {
     try {
         setLoading(true);
@@ -174,16 +176,16 @@ const fetchRequests = async () => {
         </div>
 
         <nav className="sidebar-nav">
-          <button className={activeTab === 'overview' ? 'active' : ''} onClick={() => setActiveTab('overview')}>
+          <button className={activeTab === 'overview' ? 'active' : ''} onClick={() => goToTab('overview')}>
             <FiActivity /> <span>Overview</span>
           </button>
-          <button className={activeTab === 'jobs' ? 'active' : ''} onClick={() => setActiveTab('jobs')}>
+          <button className={activeTab === 'jobs' ? 'active' : ''} onClick={() => goToTab('jobs')}>
             <FiBriefcase /><span>Requests</span> <span className="job-count-badge">{jobs.filter(job=>job.status==="Pending").length}</span>
           </button>
-          <button className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>
+          <button className={activeTab === 'history' ? 'active' : ''} onClick={() => goToTab('history')}>
             <FiCalendar /><span>Schedule</span> 
           </button>
-          <button className={activeTab === 'profile' ? 'active' : ''} onClick={() => setActiveTab('profile')}>
+          <button className={activeTab === 'profile' ? 'active' : ''} onClick={() => goToTab('profile')}>
             <FiSettings /><span> Business Profile</span>
           </button>
         </nav>

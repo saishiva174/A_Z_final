@@ -28,7 +28,7 @@ const AdminProDetail = () => {
       try {
         const res = await axios.get(`${API_URL}/api/admin/pro-details/${id}`);
         setData(res.data);
-        console.log(res.data.bookings)
+       
       } catch (err) {
         console.error("Error loading pro details:", err);
       } finally {

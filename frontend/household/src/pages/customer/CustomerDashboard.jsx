@@ -11,11 +11,11 @@ import Profile from './Profile';
 import { ReviewPage } from './ReviewPage.jsx';
 import { DEFAULT_AVATAR } from '../../utils/utils';
 import { API_URL } from '../../apiConfig';
-
+import { useSearchParams } from 'react-router-dom';
 const CustomerDashboard = () => {
 
-
- const [activeTab, setActiveTab] = useState('browse');
+const [searchParams, setSearchParams] = useSearchParams();
+ 
  const [profile, setProfile] = useState({});
  const [loading, setLoading] = useState(true);
  const [editData, setEditData] = useState({});
@@ -26,6 +26,7 @@ const CustomerDashboard = () => {
  const [selectedProId, setSelectedProId] = useState(null);
  const[targetBooking,setTargetBooking]=useState(null);
 
+ const activeTab = searchParams.get('tab') || 'browse';
 useEffect(() => {
     const userId = localStorage.getItem('userId');
     if (userId) {
@@ -101,6 +102,7 @@ await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
    
     setMyBookings(data);
     setLoading(false);
+  
     
   
   } catch (error) {
@@ -116,7 +118,9 @@ await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
 
    }
    
-   
+ const goToTab = (tabName) => {
+  setSearchParams({ tab: tabName });
+};
    
   if (loading) {
     return (
@@ -174,17 +178,17 @@ await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
         </div>
 
         <nav className="sidebar-nav">
-  <button className={activeTab === 'browse' ? 'active' : ''} onClick={() => setActiveTab('browse')}>
+  <button className={activeTab === 'browse' ? 'active' : ''} onClick={() => goToTab('browse')}>
     <FiSearch /> <span>Browse Professionals</span>
   </button>
-  <button className={activeTab === 'bookings' ? 'active' : ''} onClick={() => setActiveTab('bookings')}>
+  <button className={activeTab === 'bookings' ? 'active' : ''} onClick={() => goToTab('bookings')}>
     <FiCalendar /> <span>Active Bookings</span>
   </button>
   {/* NEW: History Tab */}
-  <button className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>
+  <button className={activeTab === 'history' ? 'active' : ''} onClick={() => goToTab('history')}>
     <FiClock /> <span>Booking History</span>
   </button>
-  <button className={activeTab === 'profile' ? 'active' : ''} onClick={() => setActiveTab('profile')}>
+  <button className={activeTab === 'profile' ? 'active' : ''} onClick={() => goToTab('profile')}>
     <FiSettings /><span>Account Settings</span> 
   </button>
 </nav>

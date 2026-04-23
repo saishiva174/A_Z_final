@@ -80,7 +80,7 @@ const Profile = ({profile,editData,setEditData,handleUpdate,setProfilePicFile}) 
       <div className="form-input">
         <label>Hourly Rate / Service Fee (₹)</label>
         <div className="input-with-icon">
-          <span className="currency-prefix">₹</span>
+          <span className="currency-prefix"></span>
           <input 
             type="number" 
             placeholder={editData.rate}
@@ -93,7 +93,7 @@ const Profile = ({profile,editData,setEditData,handleUpdate,setProfilePicFile}) 
       <div className="form-input">
         <label>Service Location / Area</label>
         <div className="input-with-icon">
-          <FiMapPin className="input-icon" />
+          
           <input 
             type="text" 
             placeholder={editData.location}

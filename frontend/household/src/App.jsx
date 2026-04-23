@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+import { useEffect } from 'react';
 import Home from './pages/Home';
 import AdminRegister from './pages/logins/AdminRegister';
 import AdminLogin from './pages/logins/AdminLogin';
@@ -15,7 +17,33 @@ import AdminCustomerDetail from './pages/admin/AdminCustomerDetail';
 import ProtectedRoute from './pages/logins/ProtectedRoutes';
 import ViewProfessional from './pages/customer/ViewProfessional';
 import EmailVerification from './pages/logins/EmailVerification';
+import { ChatPage } from './pages/chats/ChatPage';
+import { ProChatPage } from './pages/chats/ProChatPage';
 function App() {
+
+  const checkTokenExpiration = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    const decoded = jwtDecode(token);
+    const currentTime = Date.now() / 1000; // Convert to seconds
+
+    if (decoded.exp < currentTime) {
+      // 🗑️ Token has expired!
+      localStorage.removeItem('token');
+      window.location.href = '/';
+    }
+  } catch (error) {
+    localStorage.removeItem('token'); // Malformed token
+  }
+};
+
+// Run this when the app loads
+useEffect(() => {
+  checkTokenExpiration();
+}, []);
+
   return (
     <Router>
       <Routes>
@@ -29,6 +57,8 @@ function App() {
          <Route path="/customer-dashboard" element={<CustomerDashboard/>}/>
          <Route path="/pro-profile/:proId" element={<ViewProfessional />} />
          <Route path="/pro-dashboard" element={<ProfessionalDashboard/>}/>
+         <Route path="/chat/:bookingId" element={<ChatPage/>}/>
+         <Route path="/prochat/:bookingId" element={<ProChatPage/>}/>
          <Route path="/book/:proId" element={<BookingPage />} />
          </Route>
          <Route path="/customer-signup" element={<CustomerSignup/>} />

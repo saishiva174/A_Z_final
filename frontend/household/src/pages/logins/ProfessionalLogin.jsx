@@ -26,7 +26,7 @@ const ProfessionalLogin = () => {
       if (res.data.user.role === 'pro') {
 
         localStorage.setItem('token', res.data.token);
-        localStorage.setItem('proId',res.data.user.id)
+        localStorage.setItem('userId',res.data.user.id)
         localStorage.setItem('role',res.data.user.role)
         navigate('/pro-dashboard');
       } else {

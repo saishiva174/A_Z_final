@@ -90,4 +90,90 @@ router.post('/reviews', async (req, res) => {
     }
 });
 
+
+router.get('/messages/:bookingId', async (req, res) => {
+  const { bookingId } = req.params;
+  try {
+    // Postgres uses $1 for parameters
+    const result = await pool.query(
+      'SELECT * FROM messages WHERE booking_id = $1 ORDER BY created_at ASC',
+      [bookingId]
+    );
+    res.json(result.rows); // Postgres returns data in .rows
+  } catch (err) {
+    console.error("History Error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
+
+
+router.post('/send', async (req, res) => {
+  const { booking_id, sender_id, message_text } = req.body;
+
+  try {
+    // 1. Find the booking to identify the receiver
+    const bookingRes = await pool.query(
+      'SELECT customer_id, pro_id FROM bookings WHERE id = $1',
+      [booking_id]
+    );
+
+    if (bookingRes.rows.length === 0) return res.status(404).json({ error: "Booking not found" });
+
+    const booking = bookingRes.rows[0];
+
+    // 2. Logic: If sender is customer, receiver is pro. If sender is pro, receiver is customer.
+    // Use == to handle string vs number comparisons safely
+    const receiver_id = (sender_id == booking.customer_id) 
+      ? booking.pro_id 
+      : booking.customer_id;
+
+    // 3. Insert into PostgreSQL
+    const insertRes = await pool.query(
+      `INSERT INTO messages (booking_id, sender_id, receiver_id, message_text) 
+       VALUES ($1, $2, $3, $4) RETURNING *`,
+      [booking_id, sender_id, receiver_id, message_text]
+    );
+
+    const newMessage = insertRes.rows[0];
+
+    
+    res.status(201).json(newMessage);
+  } catch (err) {
+    console.error("Send Error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+router.get('/details/:bookingId', async (req, res) => {
+  const { bookingId } = req.params;
+  try {
+    const query = `
+      SELECT 
+        b.id,
+        c.name AS customer_name,
+        c.profile_pic_url AS customer_avatar,
+        p.name AS pro_name,
+        p.profile_pic_url AS pro_avatar
+      FROM bookings b
+      JOIN users c ON b.customer_id = c.id
+      JOIN users p ON b.pro_id = p.id
+      WHERE b.id = $1
+    `;
+    const result = await pool.query(query, [bookingId]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Details Error:", err.message);
+    res.status(500).json({ error: "Database error fetching details" });
+  }
+});
+
 export default router;

@@ -5,13 +5,14 @@ import {
   FiX, FiPrinter, FiImage, FiMaximize2, FiInfo, FiSearch, FiSlash, FiZap, FiMessageSquare 
 } from 'react-icons/fi'
 import './History.css'
-
+import { useNavigate } from 'react-router-dom';
 const History = ({ jobs }) => {
   const [selectedReceipt, setSelectedReceipt] = useState(null);
   const [zoomImg, setZoomImg] = useState(null); // State for full-screen image
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
 
+  const navigate = useNavigate();
   const closeReceipt = () => setSelectedReceipt(null);
 
   const filteredJobs = jobs?.filter(job => {
@@ -28,6 +29,10 @@ const History = ({ jobs }) => {
 
     return isNotPending && matchesStatus && matchesSearch;
   });
+
+  const handleGoToChat = (bookingId) => {
+    navigate(`/prochat/${bookingId}`); // 👈 Ensure this matches your route path
+  };
 
   return (
     <div className="history-view-locked">
@@ -93,17 +98,34 @@ const History = ({ jobs }) => {
               </div>
             </div>
 
-            <div className="list-item-side">
-              <div className="price-wrapper">
-                <div className={`list-price ${job.status === 'Declined' ? 'text-strike' : ''}`}>₹{job.budget}</div>
-                <span className="list-id">#{job.id}</span>
-              </div>
-              {(job.status === "Completed" || job.status === "Reviewed") ? (
-                <button className="list-receipt-btn" onClick={() => setSelectedReceipt(job)}>View Receipt</button>
-              ) : (
-                <div className="fallback-label">{job.status}</div>
-              )}
-            </div>
+           <div className="list-item-side">
+  <div className="price-wrapper">
+    <div className={`list-price ${job.status === 'Declined' ? 'text-strike' : ''}`}>₹{job.budget}</div>
+    <span className="list-id">#{job.id}</span>
+  </div>
+
+  {/* --- ACTION BUTTONS --- */}
+  <div className="side-actions-group">
+    {/* Show Chat for Accepted Jobs */}
+    {job.status === "Accepted" && (
+      <button 
+        className="list-chat-btn" 
+        onClick={() => handleGoToChat(job.id)}
+      >
+        <FiMessageSquare /> Chat
+      </button>
+    )}
+
+    {/* Show Receipt for Completed/Reviewed Jobs */}
+    {(job.status === "Completed" || job.status === "Reviewed") ? (
+      <button className="list-receipt-btn" onClick={() => setSelectedReceipt(job)}>
+        View Receipt
+      </button>
+    ) : (
+      job.status !== "Accepted" && <div className="fallback-label">{job.status}</div>
+    )}
+  </div>
+</div>
           </div>
         ))}
       </div>

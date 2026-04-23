@@ -167,12 +167,12 @@ router.get('/profile/:id', async (req, res) => {
 
 
 router.post('/book-job', uploadWork.array('problem_images', 10), async (req, res) => {
-  console.log("shs")
+ 
     const { customer_id, pro_id, service_type, description, location, preferred_time, budget } = req.body;
     
     // req.files will contain the paths of the uploaded images
     const imagePaths = req.files.map(file => file.path);
-    console.log(imagePaths)
+   
     try {
         // 1. Insert into bookings table
         const bookingResult = await pool.query(
@@ -182,7 +182,7 @@ router.post('/book-job', uploadWork.array('problem_images', 10), async (req, res
 
         const bookingId = bookingResult.rows[0].id;
         
-         console.log(bookingId)
+      
         // 2. Insert image paths into a separate table (e.g., job_images) linked to the bookingId
         for (let path of imagePaths) {
             await pool.query("INSERT INTO booking_images (booking_id, image_url) VALUES ($1, $2)", [bookingId, path]);
@@ -213,6 +213,7 @@ router.put('/update-price/:id', async (req, res) => {
 
 router.get('/bookings',verifyToken, async (req, res) => {
   const customerId = req.user.id;
+
 
   try {
   const query = `
@@ -250,7 +251,7 @@ router.get('/bookings',verifyToken, async (req, res) => {
 
     // Return the full array (even if empty)
     res.json(result.rows); 
-    
+   
   } catch (err) {
     console.error("Database Error:", err.message);
     res.status(500).json({ error: "Server error" });

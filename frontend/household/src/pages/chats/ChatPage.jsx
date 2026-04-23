@@ -17,6 +17,22 @@ export const ChatPage = () => {
   const currentUserId = localStorage.getItem('userId');
 
   // Handle Input Auto-Expansion (Gemini style)
+  useEffect(() => {
+  console.log("Attempting to connect to:", API_URL);
+
+  socket.on("connect", () => {
+    console.log("✅ Socket Connected! ID:", socket.id);
+  });
+
+  socket.on("connect_error", (err) => {
+    console.error("❌ Socket Connection Error:", err.message);
+  });
+
+  return () => {
+    socket.off("connect");
+    socket.off("connect_error");
+  };
+}, []);
   const handleInputChange = (e) => {
     const textarea = textareaRef.current;
     setInputText(e.target.value);

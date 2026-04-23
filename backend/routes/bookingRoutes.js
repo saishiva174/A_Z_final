@@ -125,7 +125,6 @@ router.post('/send', async (req, res) => {
     const booking = bookingRes.rows[0];
 
     // 2. Logic: If sender is customer, receiver is pro. If sender is pro, receiver is customer.
-    // Use == to handle string vs number comparisons safely
     const receiver_id = (sender_id == booking.customer_id) 
       ? booking.pro_id 
       : booking.customer_id;
@@ -139,14 +138,27 @@ router.post('/send', async (req, res) => {
 
     const newMessage = insertRes.rows[0];
 
+    // --- REAL-TIME TRIGGER ---
+    // Access the io instance attached to the app in server.js
+    const io = req.app.get('socketio'); 
     
+    if (io) {
+      const roomName = String(booking_id);
+      console.log(`Broadcasting to room ${roomName}:`, message_text);
+      
+      // Emit to everyone in the room (including sender if they have a listener)
+      io.to(roomName).emit('receive_message', newMessage);
+    } else {
+      console.warn("Socket.io instance not found on req.app");
+    }
+    // -------------------------
+
     res.status(201).json(newMessage);
   } catch (err) {
     console.error("Send Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
-
 
 router.get('/details/:bookingId', async (req, res) => {
   const { bookingId } = req.params;

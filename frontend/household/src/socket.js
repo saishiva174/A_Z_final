@@ -5,5 +5,5 @@ import { API_URL } from "./apiConfig";
 
 export const socket = io(API_URL, {
   withCredentials: true,
-  transports: ['websocket'] 
+  transports: ['websocket',"polling"] 
 });

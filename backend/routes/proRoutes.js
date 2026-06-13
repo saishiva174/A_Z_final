@@ -476,19 +476,30 @@ router.post('/available-ai', verifyToken, async (req, res) => {
      console.log(service_type)
     try {
         // 2. Fetch candidates matching the service from Neon using a relational JOIN
-        const SQLQuery = `
-           SELECT 
-    u.id, u.name, u.service, u.rate, u.rating, u.total_reviews, u.is_verified, u.profile_pic_url, u.location,
-    -- If missing, these fallback gracefully to NULL
-    aim.live_latitude, 
-    aim.live_longitude
-FROM users u
-LEFT JOIN provider_ai_metrics aim ON u.id = aim.provider_id
-WHERE u.role = 'pro' 
-  AND u.service = $1 
-  -- We wrap this in an OR check so we don't accidentally filter out the NULL rows!
-  AND (aim.is_available = true OR aim.is_available IS NULL);`
-
+       const SQLQuery = `
+    SELECT 
+        u.id, 
+        u.name, 
+        u.service, 
+        u.rate, 
+        u.rating, 
+        u.is_verified, 
+        u.profile_pic_url, 
+        u.location,
+        aim.live_latitude, 
+        aim.live_longitude,
+        -- 🔴 DYNAMIC COUNT: Calculates total reviews on the fly from the reviews table
+        COALESCE((
+            SELECT COUNT(*) 
+            FROM reviews r 
+            WHERE r.pro_id = u.id
+        ), 0) as total_reviews
+    FROM users u
+    LEFT JOIN provider_ai_metrics aim ON u.id = aim.provider_id
+    WHERE u.role = 'pro' 
+      AND u.service = $1 
+      AND (aim.is_available = true OR aim.is_available IS NULL);
+`;
         const dbResult = await pool.query(SQLQuery, [service_type]);
         const professionals = dbResult.rows;
          console.log(professionals)

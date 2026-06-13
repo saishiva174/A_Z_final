@@ -6,7 +6,7 @@ import fs from 'fs';
 import pool from '../db.js';
 import jwt from 'jsonwebtoken';
 import { uploadDoc } from '../middleware/cloudinaryConfig.js'
-
+import axios from 'axios';
 const router = express.Router();
 
 // --- 1. MULTER CONFIGURATION ---
@@ -400,3 +400,159 @@ router.get('/overview',verifyToken, async (req, res) => {
     }
 });
 export default router;
+
+
+
+
+
+router.post('/update-location', verifyToken, async (req, res) => {
+    const { provider_id, latitude, longitude } = req.body;
+
+    // 1. Basic validation check
+    if (!provider_id || latitude === undefined || longitude === undefined) {
+        return res.status(400).json({ 
+            error: "Missing required tracking vectors: provider_id, latitude, or longitude." 
+        });
+    }
+
+    try {
+        // 2. Perform an UPSERT operation on your separate AI metrics table
+        // This inserts a new row if it's their first sync, or updates their coordinates if they already exist.
+        const queryText = `
+            INSERT INTO provider_ai_metrics (provider_id, live_latitude, live_longitude, last_login_sync)
+            VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+            ON CONFLICT (provider_id) 
+            DO UPDATE SET 
+                live_latitude = EXCLUDED.live_latitude,
+                live_longitude = EXCLUDED.live_longitude,
+                last_login_sync = CURRENT_TIMESTAMP;
+        `;
+
+        await pool.query(queryText, [provider_id, latitude, longitude]);
+
+        // 3. Respond with a clean HTTP 200 OK status
+        return res.status(200).json({ 
+            success: true, 
+            message: "Telemetry metrics synced to Neon cluster cleanly." 
+        });
+
+    } catch (error) {
+        console.error("Database tracking sync exception:", error);
+        return res.status(500).json({ 
+            error: "Internal server error updating telemetry layer." 
+        });
+    }
+});
+
+
+
+
+
+function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+    if (!lat1 || !lon1 || !lat2 || !lon2) return 999.0; // Return a large fallback distance if data is missing
+
+    const R = 6371; // Earth's radius in kilometers
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    
+    const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return parseFloat((R * c).toFixed(2)); // Distance rounded to 2 decimal places
+}
+
+// @route   POST /api/pro/available-ai
+// @desc    Get filtered professionals ranked by an asynchronous XGBoost ML pipeline
+// @access  Private (Requires JWT token)
+router.post('/available-ai', verifyToken, async (req, res) => {
+    const { service_type, customer_lat, customer_lon } = req.body;
+
+    // 1. Validation check
+    if (!service_type) {
+        return res.status(400).json({ error: "Service category selection is required." });
+    }
+     console.log(service_type)
+    try {
+        // 2. Fetch candidates matching the service from Neon using a relational JOIN
+        const SQLQuery = `
+           SELECT 
+    u.id, u.name, u.service, u.rate, u.rating, u.total_reviews, u.is_verified, u.profile_pic_url, u.location,
+    -- If missing, these fallback gracefully to NULL
+    aim.live_latitude, 
+    aim.live_longitude
+FROM users u
+LEFT JOIN provider_ai_metrics aim ON u.id = aim.provider_id
+WHERE u.role = 'pro' 
+  AND u.service = $1 
+  -- We wrap this in an OR check so we don't accidentally filter out the NULL rows!
+  AND (aim.is_available = true OR aim.is_available IS NULL);`
+
+        const dbResult = await pool.query(SQLQuery, [service_type]);
+        const professionals = dbResult.rows;
+         console.log(professionals)
+        if (professionals.length === 0) {
+            return res.status(200).json([]); // Return clean empty array if no pros are found
+        }
+
+        // 3. Complete Feature Engineering: Compute Haversine distance for each candidate
+        const candidatesWithDistance = professionals.map(pro => {
+            let distance = 20.0; // Default logical fallback distance if customer GPS is unavailable
+
+            if (customer_lat && customer_lon) {
+                distance = calculateHaversineDistance(
+                    Number(customer_lat), 
+                    Number(customer_lon), 
+                    Number(pro.live_latitude), 
+                    Number(pro.live_longitude)
+                );
+            }
+
+            return {
+                id: pro.id,
+                name: pro.name,
+                service: pro.service,
+                rate: parseFloat(pro.rate || 0),
+                rating: parseFloat(pro.rating || 5.0),
+                total_reviews: parseInt(pro.total_reviews || 0),
+                is_verified: pro.is_verified ? 1 : 0, // Convert boolean to binary 0/1 flag for XGBoost
+                profile_pic_url: pro.profile_pic_url,
+                location: pro.location,
+                distance: distance // Newly generated feature required by the ML model matrix
+            };
+        });
+
+        // 4. Forward the dataset payload to your Python FastAPI inference engine
+        // Assuming your Python microservice runs locally on port 8000
+        try {
+          const aiBaseUrl = process.env.AI_SERVICE_URL || 'http://127.0.0.1:8000';
+          console.log(aiBaseUrl)
+            const pythonAiResponse = await axios.post(`${aiBaseUrl}/rank-professionals`, {
+                professionals: candidatesWithDistance
+            });
+
+            // The Python server returns the array already sorted with match_score and ai_reason tags!
+            return res.status(200).json(pythonAiResponse.data);
+
+        } catch (aiError) {
+            console.error("FastAPI Machine Learning pipeline communication failure:", aiError.message);
+            
+            // Fail-safe Graceful Degradation: Fallback to basic database sorting if the AI server is offline
+            const fallbackSorted = candidatesWithDistance.sort((a, b) => b.rating - a.rating);
+            
+            // Append temporary baseline notifications so the UI doesn't break
+            const finalizedFallback = fallbackSorted.map(pro => ({
+                ...pro,
+                match_score: 100,
+                ai_reason: "Ranked by historical rating (AI engine currently updating)"
+            }));
+
+            return res.status(200).json(finalizedFallback);
+        }
+
+    } catch (error) {
+        console.error("Error processing AI Smart Match route:", error);
+        return res.status(500).json({ error: "Internal server error assembling match vectors." });
+    }
+});

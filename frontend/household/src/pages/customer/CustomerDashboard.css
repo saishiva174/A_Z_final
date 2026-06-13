@@ -208,3 +208,15 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Sidebar custom button treatment for AI feature */
+.ai-tab-button {
+  color: #a5b4fc !important; /* Lighter indigo text color */
+}
+
+/* Subtle continuous ambient pulse glow for the AI tab button */
+.ai-tab-highlight {
+  background: linear-gradient(90deg, #4f46e5 0%, #312e81 100%) !important;
+  border-left: 4px solid #818cf8 !important;
+  font-weight: 600;
+}

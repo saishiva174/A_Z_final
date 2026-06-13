@@ -1,0 +1,90 @@
+-- ==========================================
+-- REPLICATED SCHEMA FOR A-Z HOUSEHOLD SERVICES
+-- ==========================================
+
+-- 1. USERS TABLE
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    role VARCHAR(50) NOT NULL, -- 'customer', 'provider', 'admin'
+    profile_pic_url TEXT,
+    id_document_url TEXT,
+    service VARCHAR(255),      -- For professionals/providers
+    is_verified BOOLEAN DEFAULT false,
+    location VARCHAR(255),
+    phone_number VARCHAR(50),
+    rate NUMERIC,
+    bio TEXT,
+    rating NUMERIC,
+    total_reviews INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. BOOKINGS TABLE
+CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY,
+    customer_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    pro_id INTEGER REFERENCES users(id) ON DELETE SET NULL, -- References the professional
+    service_type VARCHAR(255) NOT NULL,
+    description TEXT,
+    budget NUMERIC NOT NULL,
+    location VARCHAR(255),
+    preferred_time VARCHAR(255),
+    status VARCHAR(50) DEFAULT 'pending',
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP WITH TIME ZONE
+);
+
+-- 3. BOOKING IMAGES TABLE
+CREATE TABLE booking_images (
+    id SERIAL PRIMARY KEY,
+    booking_id INTEGER NOT NULL REFERENCES bookings(id) ON DELETE CASCADE,
+    image_url TEXT NOT NULL,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4. MESSAGES TABLE
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    booking_id INTEGER NOT NULL REFERENCES bookings(id) ON DELETE CASCADE,
+    sender_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    receiver_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    message_text TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 5. REVIEWS TABLE
+CREATE TABLE reviews (
+    id SERIAL PRIMARY KEY,
+    booking_id INTEGER REFERENCES bookings(id) ON DELETE SET NULL,
+    pro_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    customer_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    rating INTEGER NOT NULL,
+    comment TEXT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 6. TEMP VERIFICATIONS TABLE (Your OTP Store!)
+CREATE TABLE temp_verifications (
+    email VARCHAR(255) PRIMARY KEY,
+    otp VARCHAR(50) NOT NULL,
+    is_verified BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+-- Create the dedicated real-time AI telemetry table
+CREATE TABLE IF NOT EXISTS provider_ai_metrics (
+    provider_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    live_latitude NUMERIC(9, 6),
+    live_longitude NUMERIC(9, 6),
+    last_login_sync TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    is_available BOOLEAN DEFAULT true
+);
+
+-- Index the coordinates to optimize the future distance calculations
+CREATE INDEX IF NOT EXISTS idx_provider_geo ON provider_ai_metrics(live_latitude, live_longitude);

@@ -7,6 +7,44 @@ import { FiLock, FiLogIn, FiArrowLeft, FiUser, FiEye, FiEyeOff } from 'react-ico
 import './ProfessionalSignUp.css'; // Using the same CSS file for consistency
 import { API_URL } from '../../apiConfig';
 
+
+const syncProfessionalLocation = async (providerId) => {
+  if (!navigator.geolocation) {
+    console.log("Geolocation is not supported by this browser.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude } = position.coords;
+      const token = localStorage.getItem('token');
+
+      try {
+        // Send coordinates straight to your backend route
+        await axios.post(
+          `${API_URL}/api/pro/update-location`,
+          {
+            provider_id: providerId,
+            latitude: latitude,
+            longitude: longitude
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+        console.log("Professional location synchronized successfully.");
+      } catch (err) {
+        console.error("Failed to sync location to backend:", err);
+      }
+    },
+    (error) => {
+      console.error("Error capturing professional GPS:", error.message);
+    },
+    { enableHighAccuracy: true } // Forces device to use GPS instead of a rough IP address estimate
+  );
+};
+
+
 const ProfessionalLogin = () => {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +66,9 @@ const ProfessionalLogin = () => {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('userId',res.data.user.id)
         localStorage.setItem('role',res.data.user.role)
+    
+         syncProfessionalLocation(res.data.user.id);
+        
         navigate('/pro-dashboard');
       } else {
         setError("This account is not registered as a Professional.");

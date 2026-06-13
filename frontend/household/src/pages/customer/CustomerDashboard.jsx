@@ -1,6 +1,6 @@
 import  { useState,useEffect } from 'react';
 import axios from 'axios';
-import { FiSettings, FiCalendar,FiSearch, FiLogOut,FiClock} from 'react-icons/fi';
+import { FiSettings, FiCalendar,FiSearch, FiLogOut,FiClock,FiCpu} from 'react-icons/fi';
 import './CustomerDashboard.css';
 import ViewProfessional from './ViewProfessional';
 import BookingDetails from './BookingDetails';
@@ -12,6 +12,7 @@ import { ReviewPage } from './ReviewPage.jsx';
 import { DEFAULT_AVATAR } from '../../utils/utils';
 import { API_URL } from '../../apiConfig';
 import { useSearchParams } from 'react-router-dom';
+import {AiSmartMatch} from './AiSmartMatch.jsx';
 const CustomerDashboard = () => {
 
 const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +26,7 @@ const [searchParams, setSearchParams] = useSearchParams();
  const [myBookings, setMyBookings] = useState({});
  const [selectedProId, setSelectedProId] = useState(null);
  const[targetBooking,setTargetBooking]=useState(null);
+ 
 
  const activeTab = searchParams.get('tab') || 'browse';
 useEffect(() => {
@@ -181,6 +183,12 @@ await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
   <button className={activeTab === 'browse' ? 'active' : ''} onClick={() => goToTab('browse')}>
     <FiSearch /> <span>Browse Professionals</span>
   </button>
+  <button 
+            className={activeTab === 'ai-match' ? 'active ai-tab-highlight' : 'ai-tab-button'} 
+            onClick={() => goToTab('ai-match')}
+          >
+            <FiCpu /> <span>AI Smart Match</span>
+          </button>
   <button className={activeTab === 'bookings' ? 'active' : ''} onClick={() => goToTab('bookings')}>
     <FiCalendar /> <span>Active Bookings</span>
   </button>
@@ -211,7 +219,10 @@ await axios.put(`${API_URL}/api/admin/update-full-profile`, formData, {
         setMyBookings={setMyBookings}
         />
         )}
-
+        
+        {activeTab === 'ai-match' && (
+          <AiSmartMatch />
+        )}
         {activeTab === 'history' && (
           <History 
           myBookings={myBookings}

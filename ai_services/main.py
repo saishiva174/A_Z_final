@@ -47,6 +47,13 @@ class MatchingPayload(BaseModel):
     professionals: List[ProfessionalCandidate]
 
 # 3. The Core Inference and Explanation Endpoint
+# --- 🩺 AUTOMATED KEEP-ALIVE HEALTH CHECK ---
+@app.get("/", methods=["GET", "HEAD"])
+def system_health_check():
+    return {
+        "status": "healthy", 
+        "engine": "AZ Services AI Matching Engine Active"
+    }
 @app.post("/rank-professionals")
 def rank_professionals(payload: MatchingPayload):
     global model, explainer

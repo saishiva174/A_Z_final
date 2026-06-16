@@ -48,7 +48,8 @@ class MatchingPayload(BaseModel):
 
 # 3. The Core Inference and Explanation Endpoint
 # --- 🩺 AUTOMATED KEEP-ALIVE HEALTH CHECK ---
-@app.get("/", methods=["GET", "HEAD"])
+@app.get("/")
+@app.head("/")
 def system_health_check():
     return {
         "status": "healthy", 
